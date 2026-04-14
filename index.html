@@ -10,25 +10,42 @@
     
     <nav class="p-6 border-b border-slate-800 flex justify-between items-center max-w-6xl mx-auto">
         <div class="text-xl font-bold tracking-tight text-blue-400">danydiab.dev</div>
-        <div class="space-x-6 text-sm font-medium text-slate-300">
+        <div class="space-x-6 text-sm font-medium text-slate-300 flex items-center">
             <a href="#about" class="hover:text-white transition">About</a>
             <a href="#projects" class="hover:text-white transition">Projects</a>
-            <a href="#" class="hover:text-white transition">Resume</a>
+            <a href="./files/Dany_Diab_Resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Resume</a>
+            <a href="https://github.com/danydiab" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                GitHub
+            </a>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto p-6 mt-12 mb-20">
         
-        <section id="about" class="mb-16">
-            <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Hi, I'm Dany.</h1>
-            <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
-                I am a computer science student at Dalhousie University focused on graphics programming, procedural generation, and algorithm engineering. Welcome to my sandbox.
-            </p>
+        <section id="about" class="mb-16 flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1">
+                <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Hi, I'm Dany.</h1>
+                <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+                    I am a computer science student at Dalhousie University focused on graphics programming, game engine architecture, and simulations. Welcome to my sandbox.
+                </p>
+            </div>
+            <div class="flex-shrink-0">
+                <img 
+                    src="files/HeadShot.webp" 
+                    alt="Dany Diab"
+                    class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-4 border-slate-800 transform scale-[1.01]" 
+                    style="backface-visibility: hidden; -webkit-font-smoothing: antialiased; image-rendering: high-quality;"
+                >
+            </div>
         </section>
 
         <section class="mb-20">
             <div class="bg-slate-950 rounded-xl aspect-video flex flex-col items-center justify-center border border-slate-800 shadow-2xl relative overflow-hidden group">
                 <canvas id="simulationCanvas" class="w-full h-full"></canvas>
+                <div class="absolute bottom-4 left-4 pointer-events-none">
+                    <p class="text-xs font-mono text-slate-500 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">Reaction-Diffusion (Gray-Scott Model)</p>
+                </div>
             </div>
         </section>
 
@@ -37,10 +54,10 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer">
-                    <h3 class="text-xl font-bold mb-3 text-slate-100">Boids Spatial Partitioning</h3>
+                <div onclick="openModal('boids')" class="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Boids Spatial Partitioning</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
-                        A flocking simulation heavily optimized using uniform grids and quadtrees to handle massive entity counts efficiently.
+                        A flocking simulation optimized using uniform grids and quadtrees. Published a study on optimal grid cell sizes relative to interaction radii.
                     </p>
                     <div class="flex space-x-3 text-xs font-mono text-blue-300">
                         <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">C#</span>
@@ -48,10 +65,22 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer">
-                    <h3 class="text-xl font-bold mb-3 text-slate-100">HITS/TF-IDF Search Engine</h3>
+                <div onclick="openModal('terrain')" class="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Dany's Terrain Sandbox</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
-                        A custom search engine analyzing a Wikipedia database, utilizing Hubs and Authorities scoring alongside Term Frequency algorithms.
+                        A procedural terrain generation tool published on Steam. Utilizes custom HLSL shaders, Fractal Brownian Motion (fBm), and Ridge noise for real-time 3D mountain range simulation.
+                    </p>
+                    <div class="flex space-x-3 text-xs font-mono text-blue-300">
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">HLSL</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Unity</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Steamworks</span>
+                    </div>
+                </div>
+
+                <div onclick="openModal('search')" class="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Wikipedia Search Engine</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        A full-stack search engine implementing HITS (Hubs and Authorities) and TF-IDF algorithms to rank millions of Wikipedia pages.
                     </p>
                     <div class="flex space-x-3 text-xs font-mono text-blue-300">
                         <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Python</span>
@@ -62,6 +91,38 @@
             </div>
         </section>
     </main>
+
+    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        
+        <div id="modalInner" class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative shadow-2xl scale-95 transition-transform duration-300 overflow-hidden">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-slate-900/80 text-slate-300 hover:text-white p-2 rounded-full border border-slate-700 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="w-full bg-black aspect-video relative">
+                <video id="modalVideo" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+            </div>
+
+            <div class="p-8 overflow-y-auto">
+                <h2 id="modalTitle" class="text-3xl font-bold mb-4 text-slate-100">Project Title</h2>
+                <div id="modalTags" class="flex flex-wrap gap-3 mb-6">
+                </div>
+                <p id="modalDesc" class="text-slate-300 leading-relaxed mb-8">
+                    Project description goes here.
+                </p>
+                
+                <div class="flex gap-4">
+                    <a id="modalGithubBtn" href="#" target="_blank" rel="noopener noreferrer" class="hidden inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm font-medium text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                        View Source
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="reactionDiffusion.js"></script>
+    <script src="projects.js"></script>
 </body>
 </html>

@@ -123,7 +123,6 @@ function drawGrid(cells) {
 
 async function update(cells) {
     frameCount = 0;
-    secondsToRun = 100;
     while(true){
         frameCount++;
         updateCells(cells);
@@ -134,6 +133,5 @@ async function update(cells) {
         nextCells = temp;
         await sleep(1/fps * 1000);
 
-        if(frameCount == secondsToRun * fps) break;
     }
 }
