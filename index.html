@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dany Diab | Graphics & Simulations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
+    
+    <nav class="p-6 border-b border-slate-800 flex justify-between items-center max-w-6xl mx-auto">
+        <div class="text-xl font-bold tracking-tight text-blue-400">danydiab.dev</div>
+        <div class="space-x-6 text-sm font-medium text-slate-300">
+            <a href="#about" class="hover:text-white transition">About</a>
+            <a href="#projects" class="hover:text-white transition">Projects</a>
+            <a href="#" class="hover:text-white transition">Resume</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto p-6 mt-12 mb-20">
+        
+        <section id="about" class="mb-16">
+            <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Hi, I'm Dany.</h1>
+            <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+                I am a computer science student at Dalhousie University focused on graphics programming, procedural generation, and algorithm engineering. Welcome to my sandbox.
+            </p>
+        </section>
+
+        <section class="mb-20">
+            <div class="bg-slate-950 rounded-xl aspect-video flex flex-col items-center justify-center border border-slate-800 shadow-2xl relative overflow-hidden group">
+                
+                <div class="text-slate-600 mb-4 group-hover:text-blue-500 transition duration-500">
+                    <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                
+                <p class="text-lg font-mono text-slate-500 group-hover:text-slate-300 transition duration-500">
+                    [ Interactive WebGL Build / Game of Life Canvas ]
+                </p>
+                <p class="text-sm font-mono text-slate-700 mt-2">
+                    iframe src="unity-build/index.html"
+                </p>
+
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 class="text-2xl font-bold mb-8 border-b border-slate-800 pb-4">Recent Work</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100">Boids Spatial Partitioning</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        A flocking simulation heavily optimized using uniform grids and quadtrees to handle massive entity counts efficiently.
+                    </p>
+                    <div class="flex space-x-3 text-xs font-mono text-blue-300">
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">C#</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Unity</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100">HITS/TF-IDF Search Engine</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        A custom search engine analyzing a Wikipedia database, utilizing Hubs and Authorities scoring alongside Term Frequency algorithms.
+                    </p>
+                    <div class="flex space-x-3 text-xs font-mono text-blue-300">
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Python</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">SQLite</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        // Standard script to confirm execution on load
+        console.log("Portfolio loaded successfully.");
+        
+        // Setup function ready for future simulation logic
+        function initSimulation() {
+            const canvasElement = document.getElementById("simulation-canvas");
+            // Add custom WebGL or canvas game loop here
+        }
+    </script>
+</body>
+</html>
