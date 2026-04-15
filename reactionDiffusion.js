@@ -24,7 +24,10 @@ let mousePos = []
 // left,right booleans
 let mouseClicks = []
 
-const brushSize = 3;
+let brushSize = 3;
+
+
+let clearPressed = false;
 
 init();
 
@@ -165,9 +168,34 @@ function addDropOnMouse(cells){
     let endPos = [clamp(Math.floor(mousePos[0] + halfBrushSize), 0, cols - 1), clamp(Math.floor(mousePos[1] + halfBrushSize), 0, rows - 1)];
     for(let i = startingPos[0]; i < endPos[0]; i++){
         for(let j = startingPos[1]; j < endPos[1]; j++){
-            cells[i][j].B = 1.0;
+            nextCells[i][j].B = 1.0;
         }
     }
+}
+
+function clearCanvas(){
+    if(!clearPressed) return;
+
+    nextCells = Array.from({ length: rows }, () => {
+        return Array.from({ length: cols }, () => {
+            return { A: 1.0, B: 0.0 };
+        });
+    });
+    clearPressed = false;
+}
+
+function clearBtnPress(){
+    clearPressed = true
+}
+
+function increaseBrushSize(){
+    brushSize++;
+}
+
+function decreaseBrushSize(){
+    if(brushSize == 1) return;
+    brushSize--;
+    
 }
 
 async function update(cells) {
@@ -177,11 +205,12 @@ async function update(cells) {
         updateCells(cells);
         
         drawGrid(cells);
+        clearCanvas();
+        addDropOnMouse(cells);
 
         let temp = cells;
         cells = nextCells;
         nextCells = temp;
-        addDropOnMouse(cells);
         await sleep(1/fps * 1000);
 
     }

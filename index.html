@@ -43,6 +43,13 @@
         <section class="mb-20">
             <div class="bg-slate-950 rounded-xl aspect-video flex flex-col items-center justify-center border border-slate-800 shadow-2xl relative overflow-hidden group">
                 <canvas id="simulationCanvas" class="w-full h-full"></canvas>
+                
+                <div class="absolute top-4 right-4 flex space-x-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button id="clearSimBtn" onclick = "clearBtnPress()"class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Clear</button>
+                    <button id="decBrushBtn" onclick = "decreaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush -</button>
+                    <button id="incBrushBtn" onclick = "increaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush +</button>
+                </div>
+
                 <div class="absolute bottom-4 left-4 pointer-events-none">
                     <p class="text-xs font-mono text-slate-500 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">Reaction-Diffusion (Gray-Scott Model)</p>
                 </div>
