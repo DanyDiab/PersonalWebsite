@@ -1,40 +1,49 @@
-// 1. The Project Database
+const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.\n 
+In this project, I set out to test the performance of the spatial partioning algorithms under different simulation densities.\n
+To demonstrate my findings, I created visualizers and graphs for the presentation. `
+
+const terrainDesc = `Procedural terrain genration tool creted in Unity and published on Steam.\n
+I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch.\n
+Optimized the expensive logic for the C# Burst Compiler to improve generation times.
+Implemeted texture blending in HLSL shaders.\n
+Created a user friendly menu, including a custom file system to import and share terrains.`
+
+const wikiDesc = `A Wikipedia Search Engine imeplemented using Hyperlink Induced Topic Search (HITS) and TF-IDF.\n Managed large databases (~150GB) with one table containing 2.5B rows.\n
+Optimized query times using database indexing and caching. Reduced Topic Drift (a well known issue with HITS) using title boosting.`
+
 const projectDatabase = {
     'boids': {
         title: "Boids Spatial Partitioning",
         videoSrc: "videos/boids-demo.mp4", 
-        desc: "A flocking simulation heavily optimized using uniform grids and quadtrees. By porting spatial partitioning methods, I was able to handle massive entity counts efficiently without hitting O(N^2) bottlenecks. I also conducted and published an algorithm engineering study determining that the optimal uniform grid cell size is exactly half the interaction radius.",
+        desc: boidDesc,
         tags: ["C#", "Unity", "Algorithm Engineering"],
-        githubLink: "https://github.com/danydiab/boids-simulation" // <-- Add your real link here
+        githubLink: "https://github.com/danydiab/Boids"
     },
     'terrain': {
         title: "Dany's Terrain Sandbox",
         videoSrc: "videos/terrain-demo.mp4", 
-        desc: "A procedural terrain generation tool that I packaged and published on Steam. It utilizes custom HLSL shaders, Fractal Brownian Motion (fBm), and Ridge noise for real-time 3D mountain range simulation, giving users an interactive canvas to sculpt landscapes.",
-        tags: ["HLSL", "Unity", "Procedural Generation", "Steamworks"],
-        githubLink: "" // <-- Leave blank to hide the button
+        desc: terrainDesc,
+        tags: ["HLSL", "Unity", "Procedural Generation", "C#", "Burst Compilier"],
+        githubLink: "https://github.com/DanyDiab/MountainSim" 
     },
     'search': {
         title: "Wikipedia Search Engine",
         videoSrc: "videos/search-demo.mp4", 
-        desc: "A custom search engine analyzing a massive Wikipedia database. I implemented Hubs and Authorities (HITS) scoring to map link authority, alongside Term Frequency-Inverse Document Frequency (TF-IDF) algorithms to parse and rank raw text relevance.",
-        tags: ["Python", "SQLite", "Data Structures"],
-        githubLink: "https://github.com/danydiab/wiki-search-engine" // <-- Add your real link here
+        desc: wikiDesc,
+        tags: ["Python", "SQLite", "Big Data"],
+        githubLink: "https://github.com/danydiab/Wikisearch"
     }
 };
 
-// 2. Open Modal Logic (Attached to window so HTML can always trigger it)
 window.openModal = function(projectId) {
     const data = projectDatabase[projectId];
     if (!data) return;
 
-    // Safely inject text
     const titleEl = document.getElementById('modalTitle');
     const descEl = document.getElementById('modalDesc');
     if (titleEl) titleEl.innerText = data.title;
     if (descEl) descEl.innerText = data.desc;
     
-    // Safely inject tags
     const tagsContainer = document.getElementById('modalTags');
     if (tagsContainer) {
         tagsContainer.innerHTML = ''; 
@@ -46,7 +55,6 @@ window.openModal = function(projectId) {
         });
     }
 
-    // Safely handle GitHub Button
     const githubBtn = document.getElementById('modalGithubBtn');
     if (githubBtn) {
         if (data.githubLink && data.githubLink !== "") {
@@ -57,13 +65,11 @@ window.openModal = function(projectId) {
         }
     }
 
-    // Safely load video
     const videoElement = document.getElementById('modalVideo');
     if (videoElement) {
         videoElement.src = data.videoSrc;
     }
     
-    // Animate Modal In
     const modal = document.getElementById('projectModal');
     const modalInner = document.getElementById('modalInner');
     
@@ -76,24 +82,19 @@ window.openModal = function(projectId) {
     }
 };
 
-// 3. Close Modal Logic (Bulletproofed)
 window.closeModal = function() {
     const modal = document.getElementById('projectModal');
     const modalInner = document.getElementById('modalInner');
     const videoElement = document.getElementById('modalVideo');
     
-    // If modal doesn't exist, kill the function to prevent a crash
     if (!modal) return; 
 
-    // Trigger Fade Out
     modal.classList.add('opacity-0');
     if (modalInner) modalInner.classList.add('scale-95');
     
-    // Wait for CSS transition
     setTimeout(() => {
         modal.classList.add('hidden');
         
-        // Safely kill the video so it doesn't play audio in the background
         if (videoElement) {
             videoElement.pause();
             videoElement.removeAttribute('src'); 
@@ -102,10 +103,8 @@ window.closeModal = function() {
     }, 300);
 };
 
-// 4. Global Event Listeners (Wrapped in DOMContentLoaded to ensure HTML exists first)
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Close on background click
     const modal = document.getElementById('projectModal');
     if (modal) {
         modal.addEventListener('click', (e) => {
@@ -115,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Close on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             window.closeModal();

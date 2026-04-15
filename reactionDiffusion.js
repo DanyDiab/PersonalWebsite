@@ -1,5 +1,5 @@
-const canvasElement = document.getElementById("simulationCanvas");
-const ctx = canvasElement.getContext("2d");
+const canvas = document.getElementById("simulationCanvas");
+const ctx = canvas.getContext("2d");
 let imageData,pixels;
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -19,17 +19,25 @@ const Db = 0.5;
 let feedRate,killRate;
 let nextCells;
 
+// x,y
+let mousePos = []
+// left,right booleans
+let mouseClicks = []
+
+const brushSize = 3;
+
 init();
 
 function init(){
+    initMouseEvents();
     rows = 100;
     cols = 100;
 
     feedRate = .055;
     killRate = .062;
 
-    canvasElement.width = cols;
-    canvasElement.height = rows;
+    canvas.width = cols;
+    canvas.height = rows;
 
     imageData = ctx.createImageData(cols, rows);
     pixels = imageData.data;
@@ -121,16 +129,65 @@ function drawGrid(cells) {
     ctx.putImageData(imageData, 0, 0);
 };
 
+function clamp(num, min, max){
+    return Math.min(Math.max(num, min), max);
+}
+
+
+function initMouseEvents(){
+    canvas.addEventListener('mousemove', (event) => {
+        const rect = canvas.getBoundingClientRect();
+
+
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        
+        const x = (event.clientX - rect.left) * scaleX;
+        const y = (event.clientY - rect.top) * scaleY;
+        
+        mousePos[0] = clamp(x, 0, rows - 1);
+        mousePos[1] = clamp(y, 0, cols - 1);
+
+        let buttons = event.buttons;
+        const leftClick = buttons === 1;
+        const rightClick = buttons === 2;
+    
+        mouseClicks[0] = leftClick;
+        mouseClicks[1] = rightClick;
+
+    });
+}
+
+// adds chemical B centered mouse position
+function addDropOnMouse(cells){
+    // if !left clicked pressed
+    if(!mouseClicks[0]) return;
+
+    let halfBrushSize = brushSize / 2;
+
+    // center the brush stroke about the mouse Pos
+    let startingPos = [clamp(Math.floor(mousePos[0] - halfBrushSize), 0, cols - 1), clamp(Math.floor(mousePos[1] - halfBrushSize), 0, rows - 1)];
+    let endPos = [clamp(Math.floor(mousePos[0] + halfBrushSize), 0, cols - 1), clamp(Math.floor(mousePos[1] + halfBrushSize), 0, rows - 1)];
+    for(let i = startingPos[0]; i < endPos[0]; i++){
+        for(let j = startingPos[1]; j < endPos[1]; j++){
+            cells[i][j].B = 1.0;
+        }
+    }
+}
+
 async function update(cells) {
     frameCount = 0;
     while(true){
         frameCount++;
         updateCells(cells);
+        
         drawGrid(cells);
 
         let temp = cells;
         cells = nextCells;
         nextCells = temp;
+        addDropOnMouse(cells);
         await sleep(1/fps * 1000);
 
     }
