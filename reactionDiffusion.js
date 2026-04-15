@@ -53,12 +53,6 @@ function init(){
         });
     });
 
-    for (let i = 45; i < 55; i++) {
-        for (let j = 45; j < 55; j++) {
-            cells[i][j].B = 1.0;
-        }
-    }
-
     update(cells);
 }
 
