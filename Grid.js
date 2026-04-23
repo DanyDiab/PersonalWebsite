@@ -1,6 +1,7 @@
-let brushSize = 30;
+let brushSize = 1;
+const brushIncrementSize = 5;
 let imageData, pixels;
-const numPoints = 50;
+const numPoints = 10;
 
 function initGrid(ctx, cols, rows){
     imageData = ctx.createImageData(cols, rows);
@@ -66,9 +67,11 @@ function drawLineBetweenPoints(point1, point2, nextCells){
 
 function decreaseBrushSize(){
     if(brushSize == 1) return;
-    brushSize--;
+    brushSize -= brushIncrementSize;
+    clamp(brushSize,1,100);
 }
 
 function increaseBrushSize(){
-    brushSize++;
+    brushSize += brushIncrementSize;
+    clamp(brushSize,1,100);
 }

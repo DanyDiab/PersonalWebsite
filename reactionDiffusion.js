@@ -12,7 +12,7 @@ let nextCells, cells;
 
 
 // general
-const fps = 60;
+const fps = 120;
 let dt = 1.1;
 let canvas, ctx;
 
@@ -43,8 +43,8 @@ function init() {
     cols = 500;
     initGrid(ctx, cols, rows);
 
-    feedRate = .046;
-    killRate = .065;
+    feedRate = .0595;
+    killRate = .0618;
 
     canvas.width = cols;
     canvas.height = rows;
@@ -152,7 +152,7 @@ function addDropOnMouse() {
     if (!mouseClicks[0]) return;
 
     drawLineBetweenPoints(prevMousePos,mousePos, nextCells);
-    // drawPointOnGrid(brushSize,mousePos[0],mousePos[1]);
+    // drawPointOnGrid(mousePos[0],mousePos[1], nextCells);
     
 }
 
