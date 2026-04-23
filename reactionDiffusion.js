@@ -1,48 +1,53 @@
-const canvas = document.getElementById("simulationCanvas");
-const ctx = canvas.getContext("2d");
-let imageData, pixels;
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
+// simuation
 const cellData = {
     A: 0,
     B: 0
 };
-
 let rows, cols;
-const fps = 60;
-let dt = 1.1;
-
 const Da = 1.0;
 const Db = 0.5;
-
 let feedRate, killRate;
 let nextCells, cells;
 
+
+// general
+const fps = 60;
+let dt = 1.1;
+let canvas, ctx;
+
+
+// MOUSE
 // x,y
 let mousePos = [];
 let mouseDelta;
 let prevMousePos = [];
-// left,right booleans
+// left,right(booleans)
 let mouseClicks = [];
 
-let brushSize = 30;
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 init();
 
+
+function grabFromHTML(){
+    canvas = document.getElementById("simulationCanvas");
+    ctx = canvas.getContext("2d");
+}
+
 function init() {
+    grabFromHTML();
     initMouseEvents();
-    rows = 1000;
-    cols = 1000;
+
+    rows = 500;
+    cols = 500;
+    initGrid(ctx, cols, rows);
 
     feedRate = .046;
     killRate = .065;
 
     canvas.width = cols;
     canvas.height = rows;
-
-    imageData = ctx.createImageData(cols, rows);
-    pixels = imageData.data;
     
     const size = rows * cols;
     
@@ -65,16 +70,6 @@ function clearGrid() {
     cells.B.fill(0.0);
     nextCells.A.fill(1.0);
     nextCells.B.fill(0.0);
-}
-
-function decreaseBrushSize(){
-    if(brushSize == 1) return;
-
-    brushSize--;
-}
-
-function increaseBrushSize(){
-    brushSize++;
 }
 
 function getLaplacian(x, y, grid, type) {
@@ -124,24 +119,7 @@ async function updateCells() {
     }
 }
 
-function drawGrid() {
-    for (let x = 0; x < cols; x++) {
-        for (let y = 0; y < rows; y++) {
-            const idx = x + y * cols;
-            const pixelIndex = idx * 4;
-            const intensity = Math.floor(cells.B[idx] * 255);
-            pixels[pixelIndex + 0] = 0;
-            pixels[pixelIndex + 1] = intensity;
-            pixels[pixelIndex + 2] = intensity;
-            pixels[pixelIndex + 3] = 255;
-        }
-    }
-    ctx.putImageData(imageData, 0, 0);
-}
 
-function clamp(num, min, max) {
-    return Math.min(Math.max(num, min), max);
-}
 
 function initMouseEvents() {
     canvas.addEventListener('mousemove', (event) => {
@@ -173,53 +151,9 @@ function updateMosLastPos(){
 function addDropOnMouse() {
     if (!mouseClicks[0]) return;
 
-    drawLineBetweenPoints(prevMousePos,mousePos);
+    drawLineBetweenPoints(prevMousePos,mousePos, nextCells);
     // drawPointOnGrid(brushSize,mousePos[0],mousePos[1]);
     
-}
-
-
-function drawPointOnGrid(size, x, y) {
-    let halfBrushSize = size / 2.0;
-
-    let startingX = clamp(Math.floor(x - halfBrushSize), 0, cols - 1);
-    let startingY = clamp(Math.floor(y - halfBrushSize), 0, rows - 1);
-
-    let endX = clamp(Math.floor(x + halfBrushSize), 0, cols - 1);
-    let endY = clamp(Math.floor(y + halfBrushSize), 0, rows - 1);
-    
-    for (let i = startingX; i <= endX; i++) {
-        for (let j = startingY; j <= endY; j++) {
-            nextCells.B[i + j * cols] = 1.0;
-        }
-    }
-}
-
-
-function drawLineBetweenPoints(point1, point2){
-    let numPoints = 50;
-    let dx = Math.abs(Math.floor(point2[0] - point1[0]));
-    let dy = Math.abs(Math.floor(point2[1] - point1[1]));
-
-    let delta = dx + dy;
-
-    let dirX = point2[0] - point1[0];
-    let dirY = point2[1] - point1[1];
-    let dir =  normalizeVector([dirX, dirY]);
-
-
-    let moved = dir.map(x => x * delta);
-
-
-    for(let i = 0; i < numPoints; i++){
-        let percent = i / numPoints;
-        let currX = (point1[0]  * (1 - percent) + point2[0] * percent);
-        let currY = (point1[1]  * (1 - percent) + point2[1] * percent);
-
-        drawPointOnGrid(brushSize,currX, currY);
-
-    }
-
 }
 
 async function update() {
@@ -229,7 +163,7 @@ async function update() {
         updateCells();
         addDropOnMouse();
         updateMosLastPos();
-        drawGrid();
+        drawGrid(pixels, imageData);
 
         let temp = cells;
         cells = nextCells;
