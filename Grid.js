@@ -1,7 +1,7 @@
 let brushSize = 1;
 const brushIncrementSize = 5;
 let imageData, pixels;
-const numPoints = 10;
+const numPoints = 20;
 
 function initGrid(ctx, cols, rows){
     imageData = ctx.createImageData(cols, rows);

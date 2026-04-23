@@ -1,6 +1,6 @@
 const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.\n 
 In this project, I set out to test the performance of the spatial partioning algorithms under different simulation densities.\n
-To demonstrate my findings, I created visualizers and graphs for the presentation. `
+To demonstrate my findings, I created visualizers and graphs for the presentation. \n Created a 12 page report based on findings`
 
 const terrainDesc = `Procedural terrain genration tool creted in Unity and published on Steam.\n
 I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch.\n
@@ -11,7 +11,19 @@ Created a user friendly menu, including a custom file system to import and share
 const wikiDesc = `A Wikipedia Search Engine imeplemented using Hyperlink Induced Topic Search (HITS) and TF-IDF.\n Managed large databases (~150GB) with one table containing 2.5B rows.\n
 Optimized query times using database indexing and caching. Reduced Topic Drift (a well known issue with HITS) using title boosting.`
 
+const engineDesc = `A lightweight, high-performance 3D minigame engine built from scratch using C and OpenGL (FreeGLUT).\n
+Implemented a hierarchical scene graph and a flexible component-based "Behavior" system for modular game logic.
+Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.\n
+Demonstrated with a submarine-themed underwater environment featuring fish and dynamic terrain.`
+
 const projectDatabase = {
+    'engine': {
+        title: "Custom 3D Minigame Engine",
+        videoSrc: "videos/engine-demo.mp4",
+        desc: engineDesc,
+        tags: ["C", "OpenGL", "Graphics Engineering", "Game Engine"],
+        githubLink: ""
+    },
     'boids': {
         title: "Boids Spatial Partitioning",
         videoSrc: "videos/boids-demo.mp4", 

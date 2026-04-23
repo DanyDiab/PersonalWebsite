@@ -1,0 +1,29 @@
+Project Summary: Custom 3D Minigame Engine
+
+Overview:
+Developed a lightweight, high-performance 3D minigame engine from scratch using C and OpenGL (FreeGLUT). The engine was designed with a modular, behavior-based architecture to support real-time 3D rendering, hierarchical scene management, and extensible game logic.
+
+Core Functionality & Key Aspects:
+
+1. Architecture & Scene Management:
+   - Scene Graph: Implemented a hierarchical parent-child GameObject system allowing for complex spatial relationships and inherited transformations.
+   - Component-Based Logic: Created a flexible "Behavior" system that enables attaching multiple update and draw scripts to game objects for modular feature development.
+
+2. Rendering Engine:
+   - Custom Mesh Loading: Developed a parser for .obj files, supporting vertex data, normals, and UV mapping.
+   - VBO Support: Optimized rendering performance using Vertex Buffer Objects (VBOs).
+   - Material System: Implemented a Phong-based material system supporting ambient, diffuse, specular, and emissive properties, along with texture mapping.
+   - Procedural Geometry: Included utilities for procedural mesh generation (e.g., plane meshes) and built-in 3D primitives (spheres, cylinders, pyramids).
+   - Environmental Effects: Integrated OpenGL lighting and exponential fog to enhance scene depth and atmosphere.
+
+3. Mathematical Foundation:
+   - Custom Vector Math Library: Built a comprehensive math library (vecmath.h) for 3D calculations, including dot/cross products, normalization, and scalar operations.
+
+4. Gameplay & Interaction:
+   - Input Handling: Developed a robust system for simultaneous multi-key input and mouse-driven camera control (Orbit/Follow).
+   - Real-time Physics/Behaviors: Implemented built-in behaviors for orbital motion, sine-wave mesh deformation (for water/ocean effects), and camera-target following.
+
+5. Demonstration Project (Submarine Scene):
+   - Showcased engine capabilities with a functional underwater environment featuring procedurally animated fish, a user-controlled submarine, and dynamic terrain (coral/ocean floor).
+
+This project demonstrates deep knowledge of the graphics pipeline, memory management in C, and software engineering principles in the context of game development.

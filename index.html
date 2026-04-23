@@ -6,23 +6,25 @@
     <title>Dany Diab | Graphics & Simulations</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white min-h-full">
+<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white min-h-full select-none">
     
-    <canvas id="simulationCanvas" class="fixed inset-0 w-screen h-screen bg-slate-950 pointer-events-auto"></canvas>
+    <canvas id="simulationCanvas" class="fixed inset-0 w-screen h-screen -z-10 bg-slate-950"></canvas>
 
     <nav class="relative z-10 p-6 border-b border-slate-800 backdrop-blur-sm bg-slate-900/50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="text-xl font-bold tracking-tight text-blue-400 pointer-events-auto">danydiab.dev</div>
-            <div class="space-x-6 text-sm font-medium text-slate-300 flex items-center pointer-events-auto">
+            <div class="text-xl font-bold tracking-tight text-blue-400">danydiab.dev</div>
+            
+            <div class="space-x-6 text-sm font-medium text-slate-300 flex items-center">
                 <a href="#about" class="hover:text-white transition">About</a>
                 <a href="#projects" class="hover:text-white transition">Projects</a>
+                <a href="#awards" class="hover:text-white transition">Awards</a>
                 <a href="./files/Dany_Diab_Resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Resume</a>
-                <a href="https://github.com/danydiab" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-white transition flex items-center">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
-                    </svg>
+                
+                <a href="https://github.com/danydiab" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-white transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
                 </a>
-                <a href="https://www.linkedin.com/in/dany-diab-3b1909268/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-white transition flex items-center">
+
+                <a href="https://www.linkedin.com/in/dany-diab-3b1909268/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-white transition">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
@@ -31,67 +33,109 @@
         </div>
     </nav>
 
-    <main class="relative z-10 max-w-5xl mx-auto p-6 mt-12 mb-20 pointer-events-none">
+    <main class="relative z-10 max-w-5xl mx-auto p-6 mt-12 mb-20">
         
-        <section id="about" class="mb-16 flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50 pointer-events-auto">
+        <section id="about" class="mb-20 flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1 bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50">
                 <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Hi, I'm Dany.</h1>
                 <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
                     I am a computer science student at Dalhousie University focused on graphics programming, game engine architecture, and simulations. Welcome to my sandbox.
                 </p>
             </div>
-            
             <div class="flex-shrink-0">
-                <img 
-                    src="files/HeadShot.webp" 
-                    alt="Dany Diab"
-                    class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-4 border-slate-800 transform scale-[1.01]" 
-                >
+                <img src="files/HeadShot.webp" alt="Dany Diab" class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-4 border-slate-800">
             </div>
         </section>
 
-        <div class="fixed bottom-8 left-8 flex flex-col space-y-2 z-20 pointer-events-auto">
-            <button id="presetDefaultBtn" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition text-left">Preset: Default</button>
-            <button id="presetCoralBtn" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition text-left">Preset: Coral</button>
-            <button id="presetMitosisBtn" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition text-left">Preset: Mitosis</button>
-        </div>
-
-        <div class="fixed bottom-8 right-8 flex space-x-2 z-20 pointer-events-auto">
-            <button id="clearSimBtn" onclick="clearGrid()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Clear</button>
-            <button id="decBrushBtn" onclick="decreaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush -</button>
-            <button id="incBrushBtn" onclick="increaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush +</button>
-        </div>
-
-        <section id="projects">
+        <section id="projects" class="mb-20">
             <h2 class="text-2xl font-bold mb-8 border-b border-slate-800 pb-4">Recent Work</h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div onclick="openModal('boids')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group pointer-events-auto">
+                <div onclick="openModal('terrain')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Dany's Terrain Sandbox</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        Procedural terrain generation tool published on Steam. Features custom noise implementations and HLSL texture blending.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono text-blue-300">
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">HLSL</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Unity</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">C#</span>
+                        </div>
+                </div>
+
+                <div onclick="openModal('boids')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
                     <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Boids Spatial Partitioning</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
-                        2D Flocking Simulation optimized using uniform grids and quadtrees.
+                        Flocking simulation optimized using uniform grids and quadtrees to handle massive agent densities in real-time.
                     </p>
                     <div class="flex space-x-3 text-xs font-mono text-blue-300">
                         <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">C#</span>
                         <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Unity</span>
                     </div>
                 </div>
-
-                <div onclick="openModal('terrain')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group pointer-events-auto">
-                    <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Dany's Terrain Sandbox</h3>
+                <div onclick="openModal('engine')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Custom 3D Minigame Engine</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
-                        Procedural terrain generation tool featuring custom noise implementation.
+                        A lightweight, high-performance 3D engine built from scratch in C and OpenGL. Features a modular behavior system, custom mesh loading, and hierarchical scene management.
                     </p>
                     <div class="flex flex-wrap gap-2 text-xs font-mono text-blue-300">
-                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">HLSL</span>
-                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">C#</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">C</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">OpenGL</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Graphics</span>
                     </div>
                 </div>
+
+                <div onclick="openModal('search')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                    <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Wikipedia Search Engine</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        A full-scale search engine for English Wikipedia. Features custom Python implementations of HITS and TF-IDF to query a 150GB database with high precision.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono text-blue-300">
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Python</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">HITS/TF-IDF</span>
+                        <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Big Data</span>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </section>
+
+        <section id="awards" class="mb-20">
+            <h2 class="text-2xl font-bold mb-8 border-b border-slate-800 pb-4">Recognitions & Awards</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <div class="bg-slate-900/40 backdrop-blur-md p-6 rounded-xl border border-slate-800/50">
+                    <div class="text-blue-400 font-bold text-sm mb-2 uppercase tracking-widest">Competition</div>
+                    <h4 class="text-lg font-bold text-slate-100">Medical Data Jam</h4>
+                    <p class="text-slate-400 text-sm mt-1">1st Place Regionally | 4th Place Nationally</p>
+                </div>
+
+                <div class="bg-slate-900/40 backdrop-blur-md p-6 rounded-xl border border-slate-800/50">
+                    <div class="text-blue-400 font-bold text-sm mb-2 uppercase tracking-widest">Programming</div>
+                    <h4 class="text-lg font-bold text-slate-100">Programming Competition</h4>
+                    <p class="text-slate-400 text-sm mt-1">2nd Place Finish across Dalhousie</p>
+                </div>
+
+                <div class="bg-slate-900/40 backdrop-blur-md p-6 rounded-xl border border-slate-800/50">
+                    <div class="text-blue-400 font-bold text-sm mb-2 uppercase tracking-widest">Game Development</div>
+                    <h4 class="text-lg font-bold text-slate-100">Global Game Jam</h4>
+                    <p class="text-slate-400 text-sm mt-1">3-Year Consecutive Participant</p>
+                </div>
+
             </div>
         </section>
     </main>
 
-    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 pointer-events-auto">
+    <div class="fixed bottom-8 right-8 flex space-x-2 z-20">
+        <button onclick="clearGrid()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Clear</button>
+        <button onclick="decreaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush -</button>
+        <button onclick="increaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush +</button>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div id="modalInner" class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative shadow-2xl scale-95 transition-transform duration-300 overflow-hidden">
             <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-slate-900/80 text-slate-300 hover:text-white p-2 rounded-full border border-slate-700 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -99,9 +143,16 @@
             <div class="w-full bg-black aspect-video">
                 <video id="modalVideo" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
             </div>
-            <div class="p-8">
-                <h2 id="modalTitle" class="text-3xl font-bold mb-4">Project Title</h2>
-                <p id="modalDesc" class="text-slate-300 leading-relaxed">Project description goes here.</p>
+            <div class="p-8 overflow-y-auto">
+                <h2 id="modalTitle" class="text-3xl font-bold mb-4 text-slate-100">Project Title</h2>
+                <div id="modalTags" class="flex flex-wrap gap-3 mb-6"></div>
+                <p id="modalDesc" class="text-slate-300 leading-relaxed mb-8">Project description goes here.</p>
+                <div class="flex gap-4">
+                    <a id="modalGithubBtn" href="#" target="_blank" rel="noopener noreferrer" class="hidden inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm font-medium text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                        View Source
+                    </a>
+                </div>
             </div>
         </div>
     </div>

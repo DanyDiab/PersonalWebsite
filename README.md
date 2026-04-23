@@ -7,5 +7,4 @@ My personal website contains a reaction diffusion model created based on `https:
 
 ## TODO
 
-- Make simulation across entire page
 - Add sliders to play with feed rate and kill rate

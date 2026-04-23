@@ -43,8 +43,8 @@ function init() {
     cols = 500;
     initGrid(ctx, cols, rows);
 
-    feedRate = .0595;
-    killRate = .0618;
+    feedRate = .0353;
+    killRate = .06;
 
     canvas.width = cols;
     canvas.height = rows;
@@ -122,7 +122,7 @@ async function updateCells() {
 
 
 function initMouseEvents() {
-    canvas.addEventListener('mousemove', (event) => {
+    window.addEventListener('mousemove', (event) => {
         const rect = canvas.getBoundingClientRect();
 
         const scaleX = canvas.width / rect.width;
@@ -135,11 +135,22 @@ function initMouseEvents() {
         mousePos[1] = clamp(Math.floor(y), 0, rows - 1);
 
         let buttons = event.buttons;
-        const leftClick = buttons === 1;
-        const rightClick = buttons === 2;
+        const leftClick = (buttons & 1) === 1;
+        const rightClick = (buttons & 2) === 2;
     
         mouseClicks[0] = leftClick;
         mouseClicks[1] = rightClick;
+    });
+
+    window.addEventListener('mousedown', (event) => {
+        let buttons = event.buttons;
+        mouseClicks[0] = (buttons & 1) === 1;
+        mouseClicks[1] = (buttons & 2) === 2;
+    });
+
+    window.addEventListener('mouseup', () => {
+        mouseClicks[0] = false;
+        mouseClicks[1] = false;
     });
 }
 
@@ -151,9 +162,11 @@ function updateMosLastPos(){
 function addDropOnMouse() {
     if (!mouseClicks[0]) return;
 
-    drawLineBetweenPoints(prevMousePos,mousePos, nextCells);
-    // drawPointOnGrid(mousePos[0],mousePos[1], nextCells);
-    
+    // Don't draw if the modal is open
+    const modal = document.getElementById('projectModal');
+    if (modal && !modal.classList.contains('hidden')) return;
+
+    drawLineBetweenPoints(prevMousePos, mousePos, nextCells);
 }
 
 async function update() {
