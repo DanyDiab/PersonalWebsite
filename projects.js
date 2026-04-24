@@ -19,14 +19,24 @@ Demonstrated with a submarine-themed underwater environment featuring fish and d
 const projectDatabase = {
     'engine': {
         title: "Custom 3D Minigame Engine",
-        images: ["files/HeadShot.webp"],
+        images: ["files/GameEngine/GameEngine1.png",
+            "files/GameEngine/GameEngine2.png",
+            "files/GameEngine/GameEngine3.png",
+            "files/GameEngine/GameEngine4.png",
+            "files/GameEngine/GameEngine5.png"
+        ],
         desc: engineDesc,
         tags: ["C", "OpenGL", "Graphics Engineering", "Game Engine"],
         githubLink: ""
     },
     'boids': {
         title: "Boids Spatial Partitioning",
-        images: ["files/HeadShot.webp"], 
+        images: ["files/Boids/Boid1.png",
+            "files/Boids/Boid2.png",
+            "files/Boids/Boid3.png",
+            "files/Boids/GeneralPerformance.png",
+            "files/Boids/BestCulling.png",
+        ], 
         desc: boidDesc,
         tags: ["C#", "Unity", "Algorithm Engineering"],
         githubLink: "https://github.com/danydiab/Boids"
@@ -50,7 +60,15 @@ const projectDatabase = {
     },
     'search': {
         title: "Wikipedia Search Engine",
-        images: ["files/HeadShot.webp"], // Placeholder image
+        images: ["files/WikiSearch/LargestCities1.png",
+                "files/WikiSearch/LargestCities2.png",
+                "files/WikiSearch/MachineLearning1.png",
+                "files/WikiSearch/MachineLearning2.png",
+                "files/WikiSearch/PrimeMinister.png",
+                "files/WikiSearch/PrimeMinister2.png",
+
+
+        ],
         desc: wikiDesc,
         tags: ["Python", "SQLite", "Big Data"],
         githubLink: "https://github.com/danydiab/Wikisearch"

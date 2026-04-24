@@ -40,7 +40,7 @@
             <div class="flex-1 bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50">
                 <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Hi, I'm Dany.</h1>
                 <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
-                    I am a computer science student at Dalhousie University focused on graphics programming, game engine architecture, and simulations. Welcome to my sandbox.
+                    I am a computer science student at Dalhousie University focused on graphics programming, game engine architecture, and simulations. Welcome to my sandbox! 
                 </p>
             </div>
             <div class="flex-shrink-0 relative">
@@ -52,7 +52,7 @@
         <section id="projects" class="mb-20">
             <h2 class="text-2xl font-bold mb-8 border-b border-slate-800 pb-4">Recent Work</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div onclick="openModal('terrain')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                <div onclick="openModal('terrain')" class="bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
                     <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Dany's Terrain Sandbox</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
                         Procedural terrain generation tool published on Steam. Features custom noise implementations and HLSL texture blending.
@@ -64,7 +64,7 @@
                         </div>
                 </div>
 
-                <div onclick="openModal('boids')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                <div onclick="openModal('boids')" class="bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
                     <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Boids Spatial Partitioning</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
                         Flocking simulation optimized using uniform grids and quadtrees to handle massive agent densities in real-time.
@@ -74,7 +74,7 @@
                         <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">Unity</span>
                     </div>
                 </div>
-                <div onclick="openModal('engine')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                <div onclick="openModal('engine')" class="bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
                     <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Custom 3D Minigame Engine</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
                         A lightweight, high-performance 3D engine built from scratch in C and OpenGL. Features a modular behavior system, custom mesh loading, and hierarchical scene management.
@@ -86,7 +86,7 @@
                     </div>
                 </div>
 
-                <div onclick="openModal('search')" class="bg-slate-800/40 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
+                <div onclick="openModal('search')" class="bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50 hover:border-blue-500 hover:shadow-lg transition duration-300 cursor-pointer group">
                     <h3 class="text-xl font-bold mb-3 text-slate-100 group-hover:text-blue-400 transition">Wikipedia Search Engine</h3>
                     <p class="text-slate-400 mb-6 text-sm leading-relaxed">
                         A full-scale search engine for English Wikipedia. Features custom Python implementations of HITS and TF-IDF to query a 150GB database with high precision.
@@ -130,7 +130,8 @@
         </section>
     </main>
 
-    <div class="fixed bottom-8 right-8 flex space-x-2 z-20">
+    <div class="fixed bottom-8 right-8 flex space-x-2 z-20 items-center">
+        <input type="color" id="brushColorPicker" value="#00ffff" class="h-8 w-8 rounded cursor-pointer border border-slate-600 bg-slate-800/80 backdrop-blur-sm" title="Brush Color" onchange="updateBrushColor(this.value)">
         <button onclick="clearGrid()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Clear</button>
         <button onclick="decreaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush -</button>
         <button onclick="increaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush +</button>
@@ -142,9 +143,9 @@
             <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-slate-900/80 text-slate-300 hover:text-white p-2 rounded-full border border-slate-700 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <div id="modalMediaContainer" class="w-full bg-black aspect-video relative group">
-                <div id="modalSlideshow" class="w-full h-full relative">
-                    <img id="modalImage" src="" alt="" class="w-full h-full object-cover">
+            <div id="modalMediaContainer" class="w-full bg-black h-[45vh] flex-shrink-0 relative group flex items-center justify-center">
+                <div id="modalSlideshow" class="w-full h-full relative flex items-center justify-center">
+                    <img id="modalImage" src="" alt="" class="max-h-full max-w-full object-contain">
                     <!-- Navigation Buttons -->
                     <button onclick="prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition opacity-0 group-hover:opacity-100">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
