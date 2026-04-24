@@ -19,32 +19,73 @@ Demonstrated with a submarine-themed underwater environment featuring fish and d
 const projectDatabase = {
     'engine': {
         title: "Custom 3D Minigame Engine",
-        videoSrc: "videos/engine-demo.mp4",
+        images: ["files/HeadShot.webp"], // Placeholder image
         desc: engineDesc,
         tags: ["C", "OpenGL", "Graphics Engineering", "Game Engine"],
         githubLink: ""
     },
     'boids': {
         title: "Boids Spatial Partitioning",
-        videoSrc: "videos/boids-demo.mp4", 
+        images: ["files/HeadShot.webp"], // Placeholder image
         desc: boidDesc,
         tags: ["C#", "Unity", "Algorithm Engineering"],
         githubLink: "https://github.com/danydiab/Boids"
     },
     'terrain': {
         title: "Dany's Terrain Sandbox",
-        videoSrc: "videos/terrain-demo.mp4", 
+        images: [
+            "files/MountainExmaples/6.png",
+            "files/MountainExmaples/8.png",
+            "files/MountainExmaples/7.png",
+            "files/MountainExmaples/9.png",
+
+            "files/MountainExmaples/10.png",
+
+            "files/MountainExmaples/5.png",
+
+            "files/MountainExmaples/11.png",
+            "files/MountainExmaples/12.png",
+            "files/MountainExmaples/13.png"
+        ],
         desc: terrainDesc,
         tags: ["HLSL", "Unity", "Procedural Generation", "C#", "Burst Compilier"],
         githubLink: "https://github.com/DanyDiab/MountainSim" 
     },
     'search': {
         title: "Wikipedia Search Engine",
-        videoSrc: "videos/search-demo.mp4", 
+        images: ["files/HeadShot.webp"], // Placeholder image
         desc: wikiDesc,
         tags: ["Python", "SQLite", "Big Data"],
         githubLink: "https://github.com/danydiab/Wikisearch"
     }
+};
+
+let currentImages = [];
+let currentImageIndex = 0;
+let slideshowInterval = null;
+
+function updateSlideshow() {
+    const imgEl = document.getElementById('modalImage');
+    const counterEl = document.getElementById('slideshowCounter');
+    if (imgEl && currentImages.length > 0) {
+        imgEl.src = currentImages[currentImageIndex];
+        if (counterEl) {
+            counterEl.innerText = `${currentImageIndex + 1} / ${currentImages.length}`;
+        }
+    }
+}
+
+
+window.nextImage = function() {
+    if (currentImages.length === 0) return;
+    currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+    updateSlideshow();
+};
+
+window.prevImage = function() {
+    if (currentImages.length === 0) return;
+    currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+    updateSlideshow();
 };
 
 window.openModal = function(projectId) {
@@ -77,10 +118,10 @@ window.openModal = function(projectId) {
         }
     }
 
-    const videoElement = document.getElementById('modalVideo');
-    if (videoElement) {
-        videoElement.src = data.videoSrc;
-    }
+    // Initialize slideshow
+    currentImages = data.images || [];
+    currentImageIndex = 0;
+    updateSlideshow();
     
     const modal = document.getElementById('projectModal');
     const modalInner = document.getElementById('modalInner');
@@ -89,6 +130,8 @@ window.openModal = function(projectId) {
         modal.classList.remove('hidden');
         requestAnimationFrame(() => {
             modal.classList.remove('opacity-0');
+            modal.classList.remove('pointer-events-none');
+            modal.classList.add('pointer-events-auto');
             modalInner.classList.remove('scale-95');
         });
     }
@@ -97,21 +140,20 @@ window.openModal = function(projectId) {
 window.closeModal = function() {
     const modal = document.getElementById('projectModal');
     const modalInner = document.getElementById('modalInner');
-    const videoElement = document.getElementById('modalVideo');
     
     if (!modal) return; 
 
     modal.classList.add('opacity-0');
+    modal.classList.remove('pointer-events-auto');
+    modal.classList.add('pointer-events-none');
     if (modalInner) modalInner.classList.add('scale-95');
+    
+    stopSlideshow();
     
     setTimeout(() => {
         modal.classList.add('hidden');
-        
-        if (videoElement) {
-            videoElement.pause();
-            videoElement.removeAttribute('src'); 
-            videoElement.load(); 
-        }
+        currentImages = [];
+        currentImageIndex = 0;
     }, 300);
 };
 
@@ -129,6 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             window.closeModal();
+        } else if (e.key === 'ArrowRight') {
+            window.nextImage();
+        } else if (e.key === 'ArrowLeft') {
+            window.prevImage();
         }
     });
 });

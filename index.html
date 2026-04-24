@@ -135,13 +135,26 @@
     </div>
 
     <!-- Project Modal -->
-    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 pointer-events-none">
         <div id="modalInner" class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative shadow-2xl scale-95 transition-transform duration-300 overflow-hidden">
             <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-slate-900/80 text-slate-300 hover:text-white p-2 rounded-full border border-slate-700 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <div class="w-full bg-black aspect-video">
-                <video id="modalVideo" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+            <div id="modalMediaContainer" class="w-full bg-black aspect-video relative group">
+                <div id="modalSlideshow" class="w-full h-full relative">
+                    <img id="modalImage" src="" alt="" class="w-full h-full object-cover">
+                    <!-- Navigation Buttons -->
+                    <button onclick="prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition opacity-0 group-hover:opacity-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button onclick="nextImage()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition opacity-0 group-hover:opacity-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                    <!-- Counter -->
+                    <div id="slideshowCounter" class="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs font-mono">
+                        1 / 1
+                    </div>
+                </div>
             </div>
             <div class="p-8 overflow-y-auto">
                 <h2 id="modalTitle" class="text-3xl font-bold mb-4 text-slate-100">Project Title</h2>
