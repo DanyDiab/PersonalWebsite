@@ -1,4 +1,7 @@
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+
 function normalizeVector(vec){
     let x = vec[0];
     let y = vec[1];

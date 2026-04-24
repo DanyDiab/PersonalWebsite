@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dany Diab | Graphics & Simulations</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white min-h-full select-none">
     
@@ -42,8 +43,9 @@
                     I am a computer science student at Dalhousie University focused on graphics programming, game engine architecture, and simulations. Welcome to my sandbox.
                 </p>
             </div>
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 relative">
                 <img src="files/HeadShot.webp" alt="Dany Diab" class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-4 border-slate-800">
+                <div class="rotated-tooltip" id="tooltip">Try Clicking!</div>
             </div>
         </section>
 
@@ -174,5 +176,7 @@
     <script src="Math.js"></script>
     <script src="Grid.js"></script>
     <script src="reactionDiffusion.js"></script>
+    <script src="tooltip.js"></script>
+
 </body>
 </html>

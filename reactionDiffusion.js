@@ -25,7 +25,6 @@ let prevMousePos = [];
 // left,right(booleans)
 let mouseClicks = [];
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 init();
 

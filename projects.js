@@ -19,14 +19,14 @@ Demonstrated with a submarine-themed underwater environment featuring fish and d
 const projectDatabase = {
     'engine': {
         title: "Custom 3D Minigame Engine",
-        images: ["files/HeadShot.webp"], // Placeholder image
+        images: ["files/HeadShot.webp"],
         desc: engineDesc,
         tags: ["C", "OpenGL", "Graphics Engineering", "Game Engine"],
         githubLink: ""
     },
     'boids': {
         title: "Boids Spatial Partitioning",
-        images: ["files/HeadShot.webp"], // Placeholder image
+        images: ["files/HeadShot.webp"], 
         desc: boidDesc,
         tags: ["C#", "Unity", "Algorithm Engineering"],
         githubLink: "https://github.com/danydiab/Boids"
@@ -38,11 +38,8 @@ const projectDatabase = {
             "files/MountainExmaples/8.png",
             "files/MountainExmaples/7.png",
             "files/MountainExmaples/9.png",
-
             "files/MountainExmaples/10.png",
-
             "files/MountainExmaples/5.png",
-
             "files/MountainExmaples/11.png",
             "files/MountainExmaples/12.png",
             "files/MountainExmaples/13.png"
