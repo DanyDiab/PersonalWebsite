@@ -97,6 +97,74 @@ function getLaplacian(x, y, grid, type) {
     return sum;
 }
 
+function updateColors(newB, B, x, y, idx){
+    let colorIndex = idx * 3;
+
+    if (newB < 0.01) {
+        gridColors[colorIndex] = 0;
+        gridColors[colorIndex + 1] = 0;
+        gridColors[colorIndex + 2] = 0;
+        return;
+    }
+
+    const xMinus1 = x - 1 >= 0 ? x - 1 : cols - 1;
+    const yMinus1 = y - 1 >= 0 ? y - 1 : rows - 1;
+    const xPlus1 = x + 1 < cols ? x + 1 : 0;
+    const yPlus1 = y + 1 < rows ? y + 1 : 0;
+    
+    const neighbors = [
+        xMinus1 + y * cols,
+        xPlus1 + y * cols,
+        x + yMinus1 * cols,
+        x + yPlus1 * cols,
+        xMinus1 + yMinus1 * cols,
+        xPlus1 + yMinus1 * cols,
+        xMinus1 + yPlus1 * cols,
+        xPlus1 + yPlus1 * cols
+    ];
+    
+    let rSum = 0, gSum = 0, bSum = 0, weightSum = 0;
+    
+    for (let i = 0; i < 8; i++) {
+        let n = neighbors[i];
+        let nB = cells.B[n];
+        if (nB <= 0.01) continue;
+        let ncIdx = n * 3;
+        let nR = gridColors[ncIdx];
+        let nG = gridColors[ncIdx + 1];
+        let nBColor = gridColors[ncIdx + 2];
+        
+        // Exclude black pixels from the weighted average
+        if (nR <= 0 && nG <= 0 && nBColor <= 0) continue;
+        rSum += nR * nB;
+        gSum += nG * nB;
+        bSum += nBColor * nB;
+        weightSum += nB;
+        
+    }
+
+    if (weightSum >= 0) return;
+    let avgR = rSum / weightSum;
+    let avgG = gSum / weightSum;
+    let avgB = bSum / weightSum;
+
+    let r1 = gridColors[colorIndex];
+    let g1 = gridColors[colorIndex + 1];
+    let b1 = gridColors[colorIndex + 2];
+
+    if (r1 === 0 && g1 === 0 && b1 === 0) {
+        gridColors[colorIndex] = avgR;
+        gridColors[colorIndex + 1] = avgG;
+        gridColors[colorIndex + 2] = avgB;
+    } else {
+        let blend = 0.05; 
+        gridColors[colorIndex] = r1 + (avgR - r1) * blend;
+        gridColors[colorIndex + 1] = g1 + (avgG - g1) * blend;
+        gridColors[colorIndex + 2] = b1 + (avgB - b1) * blend;
+    }
+    
+}
+
 async function updateCells() {
     for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
@@ -114,6 +182,9 @@ async function updateCells() {
 
             nextCells.A[idx] = Math.max(0, Math.min(1, newA));
             nextCells.B[idx] = Math.max(0, Math.min(1, newB)); 
+
+            updateColors(newB, B, x, y, idx);
+
         }
     }
 }

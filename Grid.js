@@ -3,9 +3,22 @@ const brushIncrementSize = 5;
 let imageData, pixels;
 const numPoints = 20;
 
+let brushColor = { r: 0, g: 255, b: 255 }; // Default Cyan
+let gridColors;
+
+function updateBrushColor(hex) {
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (result) {
+        brushColor.r = parseInt(result[1], 16);
+        brushColor.g = parseInt(result[2], 16);
+        brushColor.b = parseInt(result[3], 16);
+    }
+}
+
 function initGrid(ctx, cols, rows){
     imageData = ctx.createImageData(cols, rows);
     pixels = imageData.data;
+    gridColors = new Float32Array(cols * rows * 3);
 }
 
 function drawGrid(pixels, imageData) {
@@ -13,10 +26,12 @@ function drawGrid(pixels, imageData) {
         for (let y = 0; y < rows; y++) {
             const idx = x + y * cols;
             const pixelIndex = idx * 4;
-            const intensity = Math.floor(cells.B[idx] * 255);
-            pixels[pixelIndex + 0] = 0;
-            pixels[pixelIndex + 1] = intensity;
-            pixels[pixelIndex + 2] = intensity;
+            const colorIndex = idx * 3;
+            const intensity = cells.B[idx]; // 0.0 to 1.0
+            
+            pixels[pixelIndex] = Math.floor(gridColors[colorIndex] * intensity);
+            pixels[pixelIndex + 1] = Math.floor(gridColors[colorIndex + 1] * intensity);
+            pixels[pixelIndex + 2] = Math.floor(gridColors[colorIndex + 2] * intensity);
             pixels[pixelIndex + 3] = 255;
         }
     }
@@ -35,7 +50,13 @@ function drawPointOnGrid(x, y, nextCells) {
     
     for (let i = startingX; i <= endX; i++) {
         for (let j = startingY; j <= endY; j++) {
-            nextCells.B[i + j * cols] = 1.0;
+            let idx = i + j * cols;
+            nextCells.B[idx] = 1.0;
+            
+            let colorIndex = idx * 3;
+            gridColors[colorIndex] = brushColor.r;
+            gridColors[colorIndex + 1] = brushColor.g;
+            gridColors[colorIndex + 2] = brushColor.b;
         }
     }
 }
