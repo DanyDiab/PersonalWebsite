@@ -141,12 +141,9 @@ window.closeModal = function() {
     if (!modal) return; 
 
     modal.classList.add('opacity-0');
-    modal.classList.remove('pointer-events-auto');
     modal.classList.add('pointer-events-none');
     if (modalInner) modalInner.classList.add('scale-95');
-    
-    stopSlideshow();
-    
+        
     setTimeout(() => {
         modal.classList.add('hidden');
         currentImages = [];
