@@ -60,8 +60,9 @@ function init() {
         B: new Float32Array(size).fill(0.0)
     };
 
+    update();
+    drawPointOnGrid(cols / 2, rows / 2, cells);
 
-    update(cells);
 }
 
 function clearGrid() {
@@ -143,7 +144,7 @@ function updateColors(newB, B, x, y, idx){
         
     }
 
-    if (weightSum >= 0) return;
+    if (weightSum <= 0) return;
     let avgR = rSum / weightSum;
     let avgG = gSum / weightSum;
     let avgB = bSum / weightSum;

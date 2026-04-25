@@ -1,14 +1,14 @@
 .rotated-tooltip {
-    position: absolute;
-    top: 85%;
-    left: 60%;
+    position: fixed;
+    top: 100px;
+    right: 20px;
     background-color: #1e293b;
     color: white;
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 28px;
     font-weight: 600;
-    transform: rotate(-20deg);
+    transform: rotate(20deg);
     z-index: 50;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     white-space: nowrap;
