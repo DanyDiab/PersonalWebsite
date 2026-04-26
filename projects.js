@@ -1,19 +1,20 @@
-const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.\n 
-In this project, I set out to test the performance of the spatial partitioning algorithms under different simulation densities.\n
-To demonstrate my findings, I created visualizers and graphs for the presentation. \n Created a 12-page report based on findings`
+const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.
+In this project, I set out to test the performance of the spatial partitioning algorithms under different simulation densities.
+To demonstrate my findings, I created visualizers and graphs for the presentation.
+Created a 12-page report based on findings`
 
-const terrainDesc = `Procedural terrain generation tool created in Unity and published on Steam.\n
-I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch.\n
+const terrainDesc = `Procedural terrain generation tool created in Unity and published on Steam.
+I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch
 Optimized the expensive logic for the C# Burst Compiler to improve generation times.
 Implemented texture blending in HLSL shaders.\n
 Created a user-friendly menu, including a custom file system to import and share terrains.`
 
-const wikiDesc = `A Wikipedia Search Engine implemented using Hyperlink Induced Topic Search (HITS) and TF-IDF.\n Managed large databases (~150GB) with one table containing 2.5B rows.\n
+const wikiDesc = `A Wikipedia Search Engine implemented using Hyperlink Induced Topic Search (HITS) and TF-IDF. Managed large databases (~150GB) with one table containing 2.5B rows.
 Optimized query times using database indexing and caching. Reduced Topic Drift (a well-known issue with HITS) using title boosting.`
 
-const engineDesc = `A lightweight, high-performance 3D minigame engine built from scratch using C and OpenGL (FreeGLUT).\n
+const engineDesc = `A lightweight, high-performance 3D minigame engine built from scratch using C and OpenGL (FreeGLUT).
 Implemented a hierarchical scene graph and a flexible component-based "Behavior" system for modular game logic.
-Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.\n
+Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.
 Demonstrated with a submarine-themed underwater environment featuring fish and dynamic terrain.`
 
 const projectDatabase = {
