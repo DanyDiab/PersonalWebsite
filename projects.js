@@ -1,19 +1,20 @@
-const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.\n 
-In this project, I set out to test the performance of the spatial partioning algorithms under different simulation densities.\n
-To demonstrate my findings, I created visualizers and graphs for the presentation. \n Created a 12 page report based on findings`
+const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.
+In this project, I set out to test the performance of the spatial partitioning algorithms under different simulation densities.
+To demonstrate my findings, I created visualizers and graphs for the presentation.
+Created a 12-page report based on findings`
 
-const terrainDesc = `Procedural terrain genration tool creted in Unity and published on Steam.\n
-I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch.\n
+const terrainDesc = `Procedural terrain generation tool created in Unity and published on Steam.
+I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch
 Optimized the expensive logic for the C# Burst Compiler to improve generation times.
-Implemeted texture blending in HLSL shaders.\n
-Created a user friendly menu, including a custom file system to import and share terrains.`
+Implemented texture blending in HLSL shaders.\n
+Created a user-friendly menu, including a custom file system to import and share terrains.`
 
-const wikiDesc = `A Wikipedia Search Engine imeplemented using Hyperlink Induced Topic Search (HITS) and TF-IDF.\n Managed large databases (~150GB) with one table containing 2.5B rows.\n
-Optimized query times using database indexing and caching. Reduced Topic Drift (a well known issue with HITS) using title boosting.`
+const wikiDesc = `A Wikipedia Search Engine implemented using Hyperlink Induced Topic Search (HITS) and TF-IDF. Managed large databases (~150GB) with one table containing 2.5B rows.
+Optimized query times using database indexing and caching. Reduced Topic Drift (a well-known issue with HITS) using title boosting.`
 
-const engineDesc = `A lightweight, high-performance 3D minigame engine built from scratch using C and OpenGL (FreeGLUT).\n
+const engineDesc = `A lightweight, high-performance 3D minigame engine built from scratch using C and OpenGL (FreeGLUT).
 Implemented a hierarchical scene graph and a flexible component-based "Behavior" system for modular game logic.
-Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.\n
+Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.
 Demonstrated with a submarine-themed underwater environment featuring fish and dynamic terrain.`
 
 const projectDatabase = {
@@ -55,8 +56,9 @@ const projectDatabase = {
             "files/MountainExmaples/13.png"
         ],
         desc: terrainDesc,
-        tags: ["HLSL", "Unity", "Procedural Generation", "C#", "Burst Compilier"],
-        githubLink: "https://github.com/DanyDiab/MountainSim" 
+        tags: ["HLSL", "Unity", "Procedural Generation", "C#", "Burst Compiler"],
+        githubLink: "https://github.com/DanyDiab/MountainSim",
+        steamLink: "https://store.steampowered.com/app/4204400/Danys_Terrain_Sandbox/" 
     },
     'search': {
         title: "Wikipedia Search Engine",
@@ -93,11 +95,11 @@ function gramFromHTML() {
 }
 
 function updateSlideshow() {
-    if (!elModalImage || currentImages.length === 0) return;
-
-    elModalImage.src = currentImages[currentImageIndex];
-    if (elSlideshowCounter) {
-        elSlideshowCounter.innerText = `${currentImageIndex + 1} / ${currentImages.length}`;
+    if (UI.modalImage && currentImages.length > 0) {
+        UI.modalImage.src = currentImages[currentImageIndex];
+        if (UI.slideshowCounter) {
+            UI.slideshowCounter.innerText = `${currentImageIndex + 1} / ${currentImages.length}`;
+        }
     }
 }
 
@@ -118,25 +120,34 @@ window.openModal = function(projectId) {
     const data = projectDatabase[projectId];
     if (!data) return;
 
-    if (elModalTitle) elModalTitle.innerText = data.title;
-    if (elModalDesc) elModalDesc.innerText = data.desc;
+    if (UI.modalTitle) UI.modalTitle.innerText = data.title;
+    if (UI.modalDesc) UI.modalDesc.innerText = data.desc;
     
-    if (elModalTags) {
-        elModalTags.innerHTML = ''; 
+    if (UI.modalTags) {
+        UI.modalTags.innerHTML = ''; 
         data.tags.forEach(tag => {
             const span = document.createElement('span');
             span.className = 'bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700 text-xs font-mono text-blue-300';
             span.innerText = tag;
-            elModalTags.appendChild(span);
+            UI.modalTags.appendChild(span);
         });
     }
 
-    if (elModalGithubBtn) {
+    if (UI.modalGithubBtn) {
         if (data.githubLink && data.githubLink !== "") {
-            elModalGithubBtn.href = data.githubLink;
-            elModalGithubBtn.classList.remove('hidden');
+            UI.modalGithubBtn.href = data.githubLink;
+            UI.modalGithubBtn.classList.remove('hidden');
         } else {
-            elModalGithubBtn.classList.add('hidden');
+            UI.modalGithubBtn.classList.add('hidden');
+        }
+    }
+
+    if (UI.modalSteamBtn) {
+        if (data.steamLink && data.steamLink !== "") {
+            UI.modalSteamBtn.href = data.steamLink;
+            UI.modalSteamBtn.classList.remove('hidden');
+        } else {
+            UI.modalSteamBtn.classList.add('hidden');
         }
     }
 
@@ -145,38 +156,37 @@ window.openModal = function(projectId) {
     currentImageIndex = 0;
     updateSlideshow();
     
-    if (!elProjectModal || !elModalInner) return;
-    
-    elProjectModal.classList.remove('hidden');
-    requestAnimationFrame(() => {
-        elProjectModal.classList.remove('opacity-0');
-        elProjectModal.classList.remove('pointer-events-none');
-        elProjectModal.classList.add('pointer-events-auto');
-        elModalInner.classList.remove('scale-95');
-    });
+    if (UI.projectModal && UI.modalInner) {
+        UI.projectModal.classList.remove('hidden');
+        requestAnimationFrame(() => {
+            UI.projectModal.classList.remove('opacity-0');
+            UI.projectModal.classList.remove('pointer-events-none');
+            UI.projectModal.classList.add('pointer-events-auto');
+            UI.modalInner.classList.remove('scale-95');
+        });
+    }
 };
 
 window.closeModal = function() {
-    if (!elProjectModal) return; 
+    if (!UI.projectModal) return; 
 
-    elProjectModal.classList.add('opacity-0');
-    elProjectModal.classList.add('pointer-events-none');
-    if (elModalInner) elModalInner.classList.add('scale-95');
+    UI.projectModal.classList.add('opacity-0');
+    UI.projectModal.classList.add('pointer-events-none');
+    if (UI.modalInner) UI.modalInner.classList.add('scale-95');
         
     setTimeout(() => {
-        elProjectModal.classList.add('hidden');
+        UI.projectModal.classList.add('hidden');
         currentImages = [];
         currentImageIndex = 0;
     }, 300);
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    gramFromHTML();
-    
-    if (elProjectModal) {
-        elProjectModal.addEventListener('click', (e) => {
-            if (e.target.id !== 'projectModal') return;
-            window.closeModal();
+document.addEventListener('DOMContentLoaded', () => {    
+    if (UI.projectModal) {
+        UI.projectModal.addEventListener('click', (e) => {
+            if (e.target.id === 'projectModal') {
+                window.closeModal();
+            }
         });
     }
 
