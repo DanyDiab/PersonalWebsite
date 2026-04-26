@@ -16,9 +16,6 @@
             <div class="text-xl font-bold tracking-tight text-blue-400">danydiab.dev</div>
             
             <div class="space-x-6 text-sm font-medium text-slate-300 flex items-center">
-                <a href="#about" class="hover:text-white transition">About</a>
-                <a href="#projects" class="hover:text-white transition">Projects</a>
-                <a href="#awards" class="hover:text-white transition">Awards</a>
                 <a href="./files/Dany_Diab_Resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Resume</a>
                 
                 <a href="https://github.com/danydiab" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-white transition">
@@ -34,19 +31,21 @@
         </div>
     </nav>
 
-    <div class="rotated-tooltip" id="tooltip">Click To Draw</div>
+    <div id="drawHint" class="fixed top-24 right-8 z-50 bg-slate-900/40 backdrop-blur-md px-8 py-4 rounded-2xl border border-slate-800/50 shadow-2xl transition-opacity duration-1000 pointer-events-none">
+        <span class="text-slate-100 font-bold tracking-tight text-lg">Click to draw</span>
+    </div>
 
-    <main class="relative z-10 max-w-5xl mx-auto p-6 mt-12 mb-20">
+    <main class="relative z-10 max-w-6xl mx-auto p-6 mt-12 mb-20">
         
-        <section id="about" class="mb-20 flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50">
+        <section id="about" class="mb-20 flex flex-col md:flex-row items-stretch gap-12">
+            <div class="flex-1 bg-slate-900/40 backdrop-blur-md p-10 rounded-2xl border border-slate-800/50 flex flex-col justify-center">
                 <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Hi, I'm Dany.</h1>
-                <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+                <p class="text-xl text-slate-200 max-w-2xl leading-relaxed">
                     I am a computer science student at Dalhousie University focused on graphics programming, game engine architecture, and simulations. Welcome to my sandbox! 
                 </p>
             </div>
-            <div class="flex-shrink-0 relative">
-                <img src="files/HeadShot.webp" alt="Dany Diab" class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-4 border-slate-800">
+            <div class="flex-shrink-0 w-64 h-64 md:h-auto md:w-80">
+                <img src="files/HeadShot.webp" alt="Dany Diab" class="w-full h-full object-cover rounded-2xl shadow-2xl border-4 border-slate-800">
             </div>
         </section>
 
@@ -105,7 +104,7 @@
             </div>
         </section>
 
-        <section id="awards" class="mb-20">
+        <section id="awards" class="mb-20 pointer-events-auto">
             <h2 class="text-2xl font-bold mb-8 border-b border-slate-800 pb-4">Recognitions & Awards</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 
@@ -136,9 +135,10 @@
         <!-- Simulation Panel -->
         <div class="relative group">
             <!-- Toggle Button -->
-            <div class="w-12 h-12 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
+            <div class="h-12 px-5 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center gap-2 text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
                 <!-- Settings/Simulation Icon -->
-                <svg class="w-6 h-6 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span class="text-sm font-semibold tracking-wide">Simulation</span>
             </div>
 
             <!-- Panel Wrapper -->
@@ -168,9 +168,10 @@
         <!-- Brush Panel -->
         <div class="relative group">
             <!-- Toggle Button -->
-            <div class="w-12 h-12 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
+            <div class="h-12 px-5 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center gap-2 text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
                 <!-- Brush Icon -->
-                <svg class="w-6 h-6 transform transition-transform duration-300 group-hover:-rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                <span class="text-sm font-semibold tracking-wide">Brush</span>
             </div>
 
             <!-- Panel Wrapper -->

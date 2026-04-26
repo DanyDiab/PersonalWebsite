@@ -1,14 +1,21 @@
-const tooltip = document.getElementById("tooltip");
-const styles = tooltip.style;
-const amp = .03;
-const freq = .05;
-let elpased = 0;
+const drawHint = document.getElementById("drawHint");
 
-function scaleTooltip(){
-    elpased++;
-    let scale =  1 + Math.sin(elpased * freq) * amp;
-    styles.setProperty('--scale', scale);
-    requestAnimationFrame(scaleTooltip);
+if (drawHint) {
+    // Fade out after 5 seconds
+    setTimeout(() => {
+        drawHint.style.opacity = "0";
+        setTimeout(() => {
+            drawHint.remove();
+        }, 1000);
+    }, 5000);
+
+    // Also remove immediately if user clicks anywhere
+    window.addEventListener('mousedown', () => {
+        if (drawHint) {
+            drawHint.style.opacity = "0";
+            setTimeout(() => {
+                drawHint.remove();
+            }, 1000);
+        }
+    }, { once: true });
 }
-
-scaleTooltip();
