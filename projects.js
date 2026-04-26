@@ -82,12 +82,10 @@ let currentImageIndex = 0;
 let slideshowInterval = null;
 
 function updateSlideshow() {
-    const imgEl = document.getElementById('modalImage');
-    const counterEl = document.getElementById('slideshowCounter');
-    if (imgEl && currentImages.length > 0) {
-        imgEl.src = currentImages[currentImageIndex];
-        if (counterEl) {
-            counterEl.innerText = `${currentImageIndex + 1} / ${currentImages.length}`;
+    if (UI.modalImage && currentImages.length > 0) {
+        UI.modalImage.src = currentImages[currentImageIndex];
+        if (UI.slideshowCounter) {
+            UI.slideshowCounter.innerText = `${currentImageIndex + 1} / ${currentImages.length}`;
         }
     }
 }
@@ -109,39 +107,34 @@ window.openModal = function(projectId) {
     const data = projectDatabase[projectId];
     if (!data) return;
 
-    const titleEl = document.getElementById('modalTitle');
-    const descEl = document.getElementById('modalDesc');
-    if (titleEl) titleEl.innerText = data.title;
-    if (descEl) descEl.innerText = data.desc;
+    if (UI.modalTitle) UI.modalTitle.innerText = data.title;
+    if (UI.modalDesc) UI.modalDesc.innerText = data.desc;
     
-    const tagsContainer = document.getElementById('modalTags');
-    if (tagsContainer) {
-        tagsContainer.innerHTML = ''; 
+    if (UI.modalTags) {
+        UI.modalTags.innerHTML = ''; 
         data.tags.forEach(tag => {
             const span = document.createElement('span');
             span.className = 'bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700 text-xs font-mono text-blue-300';
             span.innerText = tag;
-            tagsContainer.appendChild(span);
+            UI.modalTags.appendChild(span);
         });
     }
 
-    const githubBtn = document.getElementById('modalGithubBtn');
-    if (githubBtn) {
+    if (UI.modalGithubBtn) {
         if (data.githubLink && data.githubLink !== "") {
-            githubBtn.href = data.githubLink;
-            githubBtn.classList.remove('hidden');
+            UI.modalGithubBtn.href = data.githubLink;
+            UI.modalGithubBtn.classList.remove('hidden');
         } else {
-            githubBtn.classList.add('hidden');
+            UI.modalGithubBtn.classList.add('hidden');
         }
     }
 
-    const steamBtn = document.getElementById('modalSteamBtn');
-    if (steamBtn) {
+    if (UI.modalSteamBtn) {
         if (data.steamLink && data.steamLink !== "") {
-            steamBtn.href = data.steamLink;
-            steamBtn.classList.remove('hidden');
+            UI.modalSteamBtn.href = data.steamLink;
+            UI.modalSteamBtn.classList.remove('hidden');
         } else {
-            steamBtn.classList.add('hidden');
+            UI.modalSteamBtn.classList.add('hidden');
         }
     }
 
@@ -150,42 +143,37 @@ window.openModal = function(projectId) {
     currentImageIndex = 0;
     updateSlideshow();
     
-    const modal = document.getElementById('projectModal');
-    const modalInner = document.getElementById('modalInner');
-    
-    if (modal && modalInner) {
-        modal.classList.remove('hidden');
+    if (UI.projectModal && UI.modalInner) {
+        UI.projectModal.classList.remove('hidden');
         requestAnimationFrame(() => {
-            modal.classList.remove('opacity-0');
-            modal.classList.remove('pointer-events-none');
-            modal.classList.add('pointer-events-auto');
-            modalInner.classList.remove('scale-95');
+            UI.projectModal.classList.remove('opacity-0');
+            UI.projectModal.classList.remove('pointer-events-none');
+            UI.projectModal.classList.add('pointer-events-auto');
+            UI.modalInner.classList.remove('scale-95');
         });
     }
 };
 
 window.closeModal = function() {
-    const modal = document.getElementById('projectModal');
-    const modalInner = document.getElementById('modalInner');
-    
-    if (!modal) return; 
+    if (!UI.projectModal) return; 
 
-    modal.classList.add('opacity-0');
-    modal.classList.add('pointer-events-none');
-    if (modalInner) modalInner.classList.add('scale-95');
+    UI.projectModal.classList.add('opacity-0');
+    UI.projectModal.classList.add('pointer-events-none');
+    if (UI.modalInner) UI.modalInner.classList.add('scale-95');
         
     setTimeout(() => {
-        modal.classList.add('hidden');
+        UI.projectModal.classList.add('hidden');
         currentImages = [];
         currentImageIndex = 0;
     }, 300);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // The DOMContentLoaded fires after all scripts run.
+    // UI elements are cached in grabFromHTML() synchronously on load (if called, but wait! init() is called on load in reactionDiffusion.js, which calls grabFromHTML())
     
-    const modal = document.getElementById('projectModal');
-    if (modal) {
-        modal.addEventListener('click', (e) => {
+    if (UI.projectModal) {
+        UI.projectModal.addEventListener('click', (e) => {
             if (e.target.id === 'projectModal') {
                 window.closeModal();
             }

@@ -24,12 +24,30 @@ let mouseClicks = [];
 
 const neighborsCache = new Int32Array(8);
 
+window.UI = {};
+
 init();
 
 function grabFromHTML(){
-    canvas = document.getElementById("simulationCanvas");
+    UI.canvas = document.getElementById("simulationCanvas");
+    UI.projectModal = document.getElementById('projectModal');
+    UI.feedRateVal = document.getElementById('feedRateVal');
+    UI.killRateVal = document.getElementById('killRateVal');
+    UI.feedRateSlider = document.getElementById('feedRateSlider');
+    UI.killRateSlider = document.getElementById('killRateSlider');
+    UI.modalImage = document.getElementById('modalImage');
+    UI.slideshowCounter = document.getElementById('slideshowCounter');
+    UI.modalTitle = document.getElementById('modalTitle');
+    UI.modalDesc = document.getElementById('modalDesc');
+    UI.modalTags = document.getElementById('modalTags');
+    UI.modalGithubBtn = document.getElementById('modalGithubBtn');
+    UI.modalSteamBtn = document.getElementById('modalSteamBtn');
+    UI.modalInner = document.getElementById('modalInner');
+    UI.drawHint = document.getElementById('drawHint');
+
+    canvas = UI.canvas;
     ctx = canvas.getContext("2d");
-    modal = document.getElementById('projectModal');
+    modal = UI.projectModal;
 }
 
 function init() {
@@ -260,17 +278,15 @@ async function update() {
 
 function updateFeedRate(value) {
     feedRate = parseFloat(value);
-    const label = document.getElementById('feedRateVal');
-    if (label) {
-        label.innerText = feedRate.toFixed(4);
+    if (UI.feedRateVal) {
+        UI.feedRateVal.innerText = feedRate.toFixed(4);
     }
 }
 
 function updateKillRate(value) {
     killRate = parseFloat(value);
-    const label = document.getElementById('killRateVal');
-    if (label) {
-        label.innerText = killRate.toFixed(4);
+    if (UI.killRateVal) {
+        UI.killRateVal.innerText = killRate.toFixed(4);
     }
 }
 
@@ -285,11 +301,8 @@ function setPreset(name) {
     }
     
     if (newFeed !== undefined && newKill !== undefined) {
-        const feedSlider = document.getElementById('feedRateSlider');
-        const killSlider = document.getElementById('killRateSlider');
-        
-        if (feedSlider) feedSlider.value = newFeed;
-        if (killSlider) killSlider.value = newKill;
+        if (UI.feedRateSlider) UI.feedRateSlider.value = newFeed;
+        if (UI.killRateSlider) UI.killRateSlider.value = newKill;
         
         updateFeedRate(newFeed);
         updateKillRate(newKill);
