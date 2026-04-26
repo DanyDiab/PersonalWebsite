@@ -131,11 +131,62 @@
         </section>
     </main>
 
-    <div class="fixed bottom-8 right-8 flex space-x-2 z-20 items-center">
-        <input type="color" id="brushColorPicker" value="#00ffff" class="h-8 w-8 rounded cursor-pointer border border-slate-600 bg-slate-800/80 backdrop-blur-sm" title="Brush Color" onchange="updateBrushColor(this.value)">
-        <button onclick="clearGrid()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Clear</button>
-        <button onclick="decreaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush -</button>
-        <button onclick="increaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush +</button>
+    <div class="fixed bottom-8 left-8 flex space-x-6 z-30">
+        
+        <!-- Simulation Panel -->
+        <div class="relative group">
+            <!-- Toggle Button -->
+            <div class="w-12 h-12 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
+                <!-- Settings/Simulation Icon -->
+                <svg class="w-6 h-6 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+
+            <!-- Panel Wrapper -->
+            <div class="absolute bottom-0 left-0 pb-16 opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 w-80 z-0">
+                <div class="flex flex-col items-stretch space-y-3 w-full">
+                    <!-- Sliders -->
+                    <div class="flex flex-col space-y-4 bg-slate-800/80 p-4 rounded-xl border border-slate-600 backdrop-blur-sm shadow-xl w-full">
+                        <div class="flex flex-col w-full">
+                            <label for="feedRateSlider" class="text-slate-200 text-xs font-bold mb-1">Feed Rate (<span id="feedRateVal">0.0353</span>)</label>
+                            <input type="range" id="feedRateSlider" min="0.001" max="0.1" step="0.0001" value="0.0353" class="cursor-pointer h-2 w-full bg-slate-700 rounded-lg appearance-none" oninput="updateFeedRate(this.value)">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="killRateSlider" class="text-slate-200 text-xs font-bold mb-1">Kill Rate (<span id="killRateVal">0.0600</span>)</label>
+                            <input type="range" id="killRateSlider" min="0.001" max="0.1" step="0.0001" value="0.0600" class="cursor-pointer h-2 w-full bg-slate-700 rounded-lg appearance-none" oninput="updateKillRate(this.value)">
+                        </div>
+                    </div>
+                    
+                    <!-- Presets -->
+                    <div class="grid grid-cols-2 gap-3 w-full">
+                        <button onclick="setPreset('mitosis')" class="bg-blue-600/80 hover:bg-blue-500 text-white text-sm font-bold py-2.5 rounded-lg border border-blue-400/50 backdrop-blur-sm transition shadow-lg w-full">Mitosis Preset</button>
+                        <button onclick="setPreset('coral')" class="bg-indigo-600/80 hover:bg-indigo-500 text-white text-sm font-bold py-2.5 rounded-lg border border-indigo-400/50 backdrop-blur-sm transition shadow-lg w-full">Coral Preset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brush Panel -->
+        <div class="relative group">
+            <!-- Toggle Button -->
+            <div class="w-12 h-12 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
+                <!-- Brush Icon -->
+                <svg class="w-6 h-6 transform transition-transform duration-300 group-hover:-rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+            </div>
+
+            <!-- Panel Wrapper -->
+            <div class="absolute bottom-0 left-0 pb-16 opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 w-80 z-0">
+                <div class="flex flex-col items-stretch space-y-3 w-full">
+                    <!-- Brush Controls -->
+                    <div class="flex space-x-2 items-center bg-slate-800/80 p-2 rounded-xl border border-slate-600 backdrop-blur-sm shadow-xl w-full">
+                        <input type="color" id="brushColorPicker" value="#00ffff" class="h-10 flex-1 rounded-lg cursor-pointer border border-slate-500 bg-slate-700 transition hover:scale-105" title="Brush Color" onchange="updateBrushColor(this.value)">
+                        <button onclick="clearGrid()" class="flex-1 bg-red-600/80 hover:bg-red-500 text-white text-sm font-bold h-10 rounded-lg border border-red-400/50 transition px-0">Clear</button>
+                        <button onclick="decreaseBrushSize()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold h-10 rounded-lg border border-slate-500 transition px-0">Brush -</button>
+                        <button onclick="increaseBrushSize()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold h-10 rounded-lg border border-slate-500 transition px-0">Brush +</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Project Modal -->

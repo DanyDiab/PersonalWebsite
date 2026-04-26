@@ -131,9 +131,9 @@ function updateColors(newB, B, x, y, idx){
         let nB = cells.B[n];
         if (nB <= 0.01) continue;
         let ncIdx = n * 3;
-        let nR = gridColors[ncIdx];
-        let nG = gridColors[ncIdx + 1];
-        let nBColor = gridColors[ncIdx + 2];
+        let nR = localColors[ncIdx];
+        let nG = localColors[ncIdx + 1];
+        let nBColor = localColors[ncIdx + 2];
         
         // Exclude black pixels from the weighted average
         if (nR <= 0 && nG <= 0 && nBColor <= 0) continue;
@@ -149,19 +149,19 @@ function updateColors(newB, B, x, y, idx){
     let avgG = gSum / weightSum;
     let avgB = bSum / weightSum;
 
-    let r1 = gridColors[colorIndex];
-    let g1 = gridColors[colorIndex + 1];
-    let b1 = gridColors[colorIndex + 2];
+    let r1 = localColors[colorIndex];
+    let g1 = localColors[colorIndex + 1];
+    let b1 = localColors[colorIndex + 2];
 
     if (r1 === 0 && g1 === 0 && b1 === 0) {
-        gridColors[colorIndex] = avgR;
-        gridColors[colorIndex + 1] = avgG;
-        gridColors[colorIndex + 2] = avgB;
+        localColors[colorIndex] = avgR;
+        localColors[colorIndex + 1] = avgG;
+        localColors[colorIndex + 2] = avgB;
     } else {
         let blend = 0.05; 
-        gridColors[colorIndex] = r1 + (avgR - r1) * blend;
-        gridColors[colorIndex + 1] = g1 + (avgG - g1) * blend;
-        gridColors[colorIndex + 2] = b1 + (avgB - b1) * blend;
+        localColors[colorIndex] = r1 + (avgR - r1) * blend;
+        localColors[colorIndex + 1] = g1 + (avgG - g1) * blend;
+        localColors[colorIndex + 2] = b1 + (avgB - b1) * blend;
     }
     
 }
@@ -188,6 +188,16 @@ async function updateCells() {
 
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    cells.A = localA;
+    cells.B = localB;
+
+    nextCells.A = nextA;
+    nextCells.B = nextB; 
+    gridColors = localColors;   
+>>>>>>> Stashed changes
 }
 
 
@@ -233,8 +243,11 @@ function updateMosLastPos(){
 function addDropOnMouse() {
     if (!mouseClicks[0]) return;
 
+<<<<<<< Updated upstream
     // Don't draw if the modal is open
     const modal = document.getElementById('projectModal');
+=======
+>>>>>>> Stashed changes
     if (modal && !modal.classList.contains('hidden')) return;
 
     drawLineBetweenPoints(prevMousePos, mousePos, nextCells);
@@ -253,5 +266,43 @@ async function update() {
         cells = nextCells;
         nextCells = temp;
         await sleep(1 / fps * 1000);
+    }
+}
+
+function updateFeedRate(value) {
+    feedRate = parseFloat(value);
+    const label = document.getElementById('feedRateVal');
+    if (label) {
+        label.innerText = feedRate.toFixed(4);
+    }
+}
+
+function updateKillRate(value) {
+    killRate = parseFloat(value);
+    const label = document.getElementById('killRateVal');
+    if (label) {
+        label.innerText = killRate.toFixed(4);
+    }
+}
+
+function setPreset(name) {
+    let newFeed, newKill;
+    if (name === 'mitosis') {
+        newFeed = 0.0367;
+        newKill = 0.0649;
+    } else if (name === 'coral') {
+        newFeed = 0.0545;
+        newKill = 0.0620;
+    }
+    
+    if (newFeed !== undefined && newKill !== undefined) {
+        const feedSlider = document.getElementById('feedRateSlider');
+        const killSlider = document.getElementById('killRateSlider');
+        
+        if (feedSlider) feedSlider.value = newFeed;
+        if (killSlider) killSlider.value = newKill;
+        
+        updateFeedRate(newFeed);
+        updateKillRate(newKill);
     }
 }
