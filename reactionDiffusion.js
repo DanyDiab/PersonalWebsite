@@ -98,9 +98,9 @@ function updateColors(newB, B, x, y, idx, localColors, cellsB){
     let colorIndex = idx * 3;
 
     if (newB < 0.01) {
-        gridColors[colorIndex] = 0;
-        gridColors[colorIndex + 1] = 0;
-        gridColors[colorIndex + 2] = 0;
+        localColors[colorIndex] = 0;
+        localColors[colorIndex + 1] = 0;
+        localColors[colorIndex + 2] = 0;
         return;
     }
 
@@ -152,7 +152,7 @@ function updateColors(newB, B, x, y, idx, localColors, cellsB){
         localColors[colorIndex + 1] = avgG;
         localColors[colorIndex + 2] = avgB;
     } else {
-        let blend = 0.05; 
+        let blend = 0.2; 
         localColors[colorIndex] = r1 + (avgR - r1) * blend;
         localColors[colorIndex + 1] = g1 + (avgG - g1) * blend;
         localColors[colorIndex + 2] = b1 + (avgB - b1) * blend;
