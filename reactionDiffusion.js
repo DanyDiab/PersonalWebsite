@@ -1,4 +1,3 @@
-
 // simuation
 const cellData = {
     A: 0,
@@ -10,12 +9,10 @@ const Db = 0.5;
 let feedRate, killRate;
 let nextCells, cells;
 
-
 // general
 const fps = 120;
 let dt = 1.1;
-let canvas, ctx;
-
+let canvas, ctx, modal;
 
 // MOUSE
 // x,y
@@ -25,13 +22,32 @@ let prevMousePos = [];
 // left,right(booleans)
 let mouseClicks = [];
 
+const neighborsCache = new Int32Array(8);
+
+window.UI = {};
 
 init();
 
-
 function grabFromHTML(){
-    canvas = document.getElementById("simulationCanvas");
+    UI.canvas = document.getElementById("simulationCanvas");
+    UI.projectModal = document.getElementById('projectModal');
+    UI.feedRateVal = document.getElementById('feedRateVal');
+    UI.killRateVal = document.getElementById('killRateVal');
+    UI.feedRateSlider = document.getElementById('feedRateSlider');
+    UI.killRateSlider = document.getElementById('killRateSlider');
+    UI.modalImage = document.getElementById('modalImage');
+    UI.slideshowCounter = document.getElementById('slideshowCounter');
+    UI.modalTitle = document.getElementById('modalTitle');
+    UI.modalDesc = document.getElementById('modalDesc');
+    UI.modalTags = document.getElementById('modalTags');
+    UI.modalGithubBtn = document.getElementById('modalGithubBtn');
+    UI.modalSteamBtn = document.getElementById('modalSteamBtn');
+    UI.modalInner = document.getElementById('modalInner');
+    UI.drawHint = document.getElementById('drawHint');
+
+    canvas = UI.canvas;
     ctx = canvas.getContext("2d");
+    modal = UI.projectModal;
 }
 
 function init() {
@@ -72,7 +88,7 @@ function clearGrid() {
     nextCells.B.fill(0.0);
 }
 
-function getLaplacian(x, y, grid, type) {
+function getLaplacian(x, y, arr) {
     let sum = 0;
 
     const xMinus1Wrapped = x - 1 >= 0 ? x - 1 : cols - 1;
@@ -80,8 +96,6 @@ function getLaplacian(x, y, grid, type) {
 
     const xPlus1Wrapped = x + 1 < cols ? x + 1 : 0;
     const yPlus1Wrapped = y + 1 < rows ? y + 1 : 0;
-
-    const arr = grid[type];
 
     sum += arr[x + y * cols] * -1.0;
 
@@ -98,13 +112,13 @@ function getLaplacian(x, y, grid, type) {
     return sum;
 }
 
-function updateColors(newB, B, x, y, idx){
+function updateColors(newB, B, x, y, idx, localColors, cellsB){
     let colorIndex = idx * 3;
 
     if (newB < 0.01) {
-        gridColors[colorIndex] = 0;
-        gridColors[colorIndex + 1] = 0;
-        gridColors[colorIndex + 2] = 0;
+        localColors[colorIndex] = 0;
+        localColors[colorIndex + 1] = 0;
+        localColors[colorIndex + 2] = 0;
         return;
     }
 
@@ -113,27 +127,25 @@ function updateColors(newB, B, x, y, idx){
     const xPlus1 = x + 1 < cols ? x + 1 : 0;
     const yPlus1 = y + 1 < rows ? y + 1 : 0;
     
-    const neighbors = [
-        xMinus1 + y * cols,
-        xPlus1 + y * cols,
-        x + yMinus1 * cols,
-        x + yPlus1 * cols,
-        xMinus1 + yMinus1 * cols,
-        xPlus1 + yMinus1 * cols,
-        xMinus1 + yPlus1 * cols,
-        xPlus1 + yPlus1 * cols
-    ];
+    neighborsCache[0] = xMinus1 + y * cols;
+    neighborsCache[1] = xPlus1 + y * cols;
+    neighborsCache[2] = x + yMinus1 * cols;
+    neighborsCache[3] = x + yPlus1 * cols;
+    neighborsCache[4] = xMinus1 + yMinus1 * cols;
+    neighborsCache[5] = xPlus1 + yMinus1 * cols;
+    neighborsCache[6] = xMinus1 + yPlus1 * cols;
+    neighborsCache[7] = xPlus1 + yPlus1 * cols;
     
     let rSum = 0, gSum = 0, bSum = 0, weightSum = 0;
     
     for (let i = 0; i < 8; i++) {
-        let n = neighbors[i];
-        let nB = cells.B[n];
+        let n = neighborsCache[i];
+        let nB = cellsB[n];
         if (nB <= 0.01) continue;
         let ncIdx = n * 3;
-        let nR = gridColors[ncIdx];
-        let nG = gridColors[ncIdx + 1];
-        let nBColor = gridColors[ncIdx + 2];
+        let nR = localColors[ncIdx];
+        let nG = localColors[ncIdx + 1];
+        let nBColor = localColors[ncIdx + 2];
         
         // Exclude black pixels from the weighted average
         if (nR <= 0 && nG <= 0 && nBColor <= 0) continue;
@@ -149,48 +161,58 @@ function updateColors(newB, B, x, y, idx){
     let avgG = gSum / weightSum;
     let avgB = bSum / weightSum;
 
-    let r1 = gridColors[colorIndex];
-    let g1 = gridColors[colorIndex + 1];
-    let b1 = gridColors[colorIndex + 2];
+    let r1 = localColors[colorIndex];
+    let g1 = localColors[colorIndex + 1];
+    let b1 = localColors[colorIndex + 2];
 
     if (r1 === 0 && g1 === 0 && b1 === 0) {
-        gridColors[colorIndex] = avgR;
-        gridColors[colorIndex + 1] = avgG;
-        gridColors[colorIndex + 2] = avgB;
+        localColors[colorIndex] = avgR;
+        localColors[colorIndex + 1] = avgG;
+        localColors[colorIndex + 2] = avgB;
     } else {
-        let blend = 0.05; 
-        gridColors[colorIndex] = r1 + (avgR - r1) * blend;
-        gridColors[colorIndex + 1] = g1 + (avgG - g1) * blend;
-        gridColors[colorIndex + 2] = b1 + (avgB - b1) * blend;
+        let blend = 0.2; 
+        localColors[colorIndex] = r1 + (avgR - r1) * blend;
+        localColors[colorIndex + 1] = g1 + (avgG - g1) * blend;
+        localColors[colorIndex + 2] = b1 + (avgB - b1) * blend;
     }
-    
 }
 
 async function updateCells() {
+    let localA = cells.A; 
+    let localB = cells.B;
+    let nextA = nextCells.A;
+    let nextB = nextCells.B;
+    let localColors = gridColors;
+
     for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
             const idx = x + y * cols;
 
-            let A = cells.A[idx];
-            let B = cells.B[idx];
+            let A = localA[idx];
+            let B = localB[idx];
             
             let ABB = A * B * B;
-            let lapacianA = getLaplacian(x, y, cells, "A");
-            let lapacianB = getLaplacian(x, y, cells, "B");
+
+            let lapacianA = getLaplacian(x, y, localA);
+            let lapacianB = getLaplacian(x, y, localB);
 
             let newA = A + (Da * lapacianA - ABB + feedRate * (1.0 - A)) * dt;
             let newB = B + (Db * lapacianB + ABB - (killRate + feedRate) * B) * dt;
 
-            nextCells.A[idx] = Math.max(0, Math.min(1, newA));
-            nextCells.B[idx] = Math.max(0, Math.min(1, newB)); 
+            nextA[idx] = Math.max(0, Math.min(1, newA));
+            nextB[idx] = Math.max(0, Math.min(1, newB)); 
 
-            updateColors(newB, B, x, y, idx);
-
+            updateColors(newB, B, x, y, idx, localColors, localB);
         }
     }
+
+    cells.A = localA;
+    cells.B = localB;
+
+    nextCells.A = nextA;
+    nextCells.B = nextB; 
+    gridColors = localColors;   
 }
-
-
 
 function initMouseEvents() {
     window.addEventListener('mousemove', (event) => {
@@ -233,8 +255,6 @@ function updateMosLastPos(){
 function addDropOnMouse() {
     if (!mouseClicks[0]) return;
 
-    // Don't draw if the modal is open
-    const modal = document.getElementById('projectModal');
     if (modal && !modal.classList.contains('hidden')) return;
 
     drawLineBetweenPoints(prevMousePos, mousePos, nextCells);
@@ -244,14 +264,47 @@ async function update() {
     let frameCount = 0;
     while (true) {
         frameCount++;
+        
         updateCells();
         addDropOnMouse();
         updateMosLastPos();
         drawGrid(pixels, imageData);
-
         let temp = cells;
         cells = nextCells;
         nextCells = temp;
         await sleep(1 / fps * 1000);
+    }
+}
+
+function updateFeedRate(value) {
+    feedRate = parseFloat(value);
+    if (UI.feedRateVal) {
+        UI.feedRateVal.innerText = feedRate.toFixed(4);
+    }
+}
+
+function updateKillRate(value) {
+    killRate = parseFloat(value);
+    if (UI.killRateVal) {
+        UI.killRateVal.innerText = killRate.toFixed(4);
+    }
+}
+
+function setPreset(name) {
+    let newFeed, newKill;
+    if (name === 'mitosis') {
+        newFeed = 0.0367;
+        newKill = 0.0649;
+    } else if (name === 'coral') {
+        newFeed = 0.0545;
+        newKill = 0.0620;
+    }
+    
+    if (newFeed !== undefined && newKill !== undefined) {
+        if (UI.feedRateSlider) UI.feedRateSlider.value = newFeed;
+        if (UI.killRateSlider) UI.killRateSlider.value = newKill;
+        
+        updateFeedRate(newFeed);
+        updateKillRate(newKill);
     }
 }

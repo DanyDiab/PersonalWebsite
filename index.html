@@ -16,9 +16,6 @@
             <div class="text-xl font-bold tracking-tight text-blue-400">danydiab.dev</div>
             
             <div class="space-x-6 text-sm font-medium text-slate-300 flex items-center">
-                <a href="#about" class="hover:text-white transition">About</a>
-                <a href="#projects" class="hover:text-white transition">Projects</a>
-                <a href="#awards" class="hover:text-white transition">Awards</a>
                 <a href="./files/Dany_Diab_Resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Resume</a>
                 
                 <a href="https://github.com/danydiab" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-white transition">
@@ -34,19 +31,21 @@
         </div>
     </nav>
 
-    <div class="rotated-tooltip" id="tooltip">Click To Draw</div>
+    <div id="drawHint" class="fixed top-24 right-8 z-50 bg-slate-900/40 backdrop-blur-md px-8 py-4 rounded-2xl border border-slate-800/50 shadow-2xl transition-opacity duration-1000 pointer-events-none hidden md:block">
+        <span class="text-slate-100 font-bold tracking-tight text-lg">Click to draw</span>
+    </div>
 
-    <main class="relative z-10 max-w-5xl mx-auto p-6 mt-12 mb-20">
+    <main class="relative z-10 max-w-6xl mx-auto p-6 mt-12 mb-20">
         
-        <section id="about" class="mb-20 flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/50">
+        <section id="about" class="mb-20 flex flex-col md:flex-row items-stretch gap-12">
+            <div class="flex-1 bg-slate-900/40 backdrop-blur-md p-10 rounded-2xl border border-slate-800/50 flex flex-col justify-center">
                 <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Hi, I'm Dany.</h1>
-                <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+                <p class="text-xl text-slate-200 max-w-2xl leading-relaxed">
                     I am a computer science student at Dalhousie University focused on graphics programming, game engine architecture, and simulations. Welcome to my sandbox! 
                 </p>
             </div>
-            <div class="flex-shrink-0 relative">
-                <img src="files/HeadShot.webp" alt="Dany Diab" class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-4 border-slate-800">
+            <div class="flex-shrink-0 w-64 h-64 md:h-auto md:w-80">
+                <img src="files/HeadShot.webp" alt="Dany Diab" class="w-full h-full object-cover rounded-2xl shadow-2xl border-4 border-slate-800">
             </div>
         </section>
 
@@ -122,7 +121,7 @@
             </div>
         </section>
 
-        <section id="awards" class="mb-20">
+        <section id="awards" class="mb-20 pointer-events-auto">
             <h2 class="text-2xl font-bold mb-8 border-b border-slate-800 pb-4">Recognitions & Awards</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 
@@ -148,11 +147,64 @@
         </section>
     </main>
 
-    <div class="fixed bottom-8 right-8 flex space-x-2 z-20 items-center">
-        <input type="color" id="brushColorPicker" value="#00ffff" class="h-8 w-8 rounded cursor-pointer border border-slate-600 bg-slate-800/80 backdrop-blur-sm" title="Brush Color" onchange="updateBrushColor(this.value)">
-        <button onclick="clearGrid()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Clear</button>
-        <button onclick="decreaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush -</button>
-        <button onclick="increaseBrushSize()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-1.5 rounded border border-slate-600 backdrop-blur-sm transition">Brush +</button>
+    <div class="fixed bottom-8 left-8 hidden md:flex space-x-6 z-30">
+        
+        <!-- Simulation Panel -->
+        <div class="relative group">
+            <!-- Toggle Button -->
+            <div class="h-12 px-5 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center gap-2 text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
+                <!-- Settings/Simulation Icon -->
+                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span class="text-sm font-semibold tracking-wide">Simulation</span>
+            </div>
+
+            <!-- Panel Wrapper -->
+            <div class="absolute bottom-0 left-0 pb-16 opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 w-80 z-0">
+                <div class="flex flex-col items-stretch space-y-3 w-full">
+                    <!-- Sliders -->
+                    <div class="flex flex-col space-y-4 bg-slate-800/80 p-4 rounded-xl border border-slate-600 backdrop-blur-sm shadow-xl w-full">
+                        <div class="flex flex-col w-full">
+                            <label for="feedRateSlider" class="text-slate-200 text-xs font-bold mb-1">Feed Rate (<span id="feedRateVal">0.0353</span>)</label>
+                            <input type="range" id="feedRateSlider" min="0.001" max="0.1" step="0.0001" value="0.0353" class="cursor-pointer h-2 w-full bg-slate-700 rounded-lg appearance-none" oninput="updateFeedRate(this.value)">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="killRateSlider" class="text-slate-200 text-xs font-bold mb-1">Kill Rate (<span id="killRateVal">0.0600</span>)</label>
+                            <input type="range" id="killRateSlider" min="0.001" max="0.1" step="0.0001" value="0.0600" class="cursor-pointer h-2 w-full bg-slate-700 rounded-lg appearance-none" oninput="updateKillRate(this.value)">
+                        </div>
+                    </div>
+                    
+                    <!-- Presets -->
+                    <div class="grid grid-cols-2 gap-3 w-full">
+                        <button onclick="setPreset('mitosis')" class="bg-blue-600/80 hover:bg-blue-500 text-white text-sm font-bold py-2.5 rounded-lg border border-blue-400/50 backdrop-blur-sm transition shadow-lg w-full">Mitosis Preset</button>
+                        <button onclick="setPreset('coral')" class="bg-indigo-600/80 hover:bg-indigo-500 text-white text-sm font-bold py-2.5 rounded-lg border border-indigo-400/50 backdrop-blur-sm transition shadow-lg w-full">Coral Preset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brush Panel -->
+        <div class="relative group">
+            <!-- Toggle Button -->
+            <div class="h-12 px-5 bg-slate-800/90 hover:bg-slate-700/90 rounded-full border border-slate-600 backdrop-blur-sm shadow-xl flex items-center justify-center gap-2 text-slate-300 transition-colors duration-300 cursor-pointer relative z-10">
+                <!-- Brush Icon -->
+                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                <span class="text-sm font-semibold tracking-wide">Brush</span>
+            </div>
+
+            <!-- Panel Wrapper -->
+            <div class="absolute bottom-0 left-0 pb-16 opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 w-80 z-0">
+                <div class="flex flex-col items-stretch space-y-3 w-full">
+                    <!-- Brush Controls -->
+                    <div class="flex space-x-2 items-center bg-slate-800/80 p-2 rounded-xl border border-slate-600 backdrop-blur-sm shadow-xl w-full">
+                        <input type="color" id="brushColorPicker" value="#00ffff" class="h-10 flex-1 rounded-lg cursor-pointer border border-slate-500 bg-slate-700 transition hover:scale-105" title="Brush Color" onchange="updateBrushColor(this.value)">
+                        <button onclick="clearGrid()" class="flex-1 bg-red-600/80 hover:bg-red-500 text-white text-sm font-bold h-10 rounded-lg border border-red-400/50 transition px-0">Clear</button>
+                        <button onclick="decreaseBrushSize()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold h-10 rounded-lg border border-slate-500 transition px-0">Brush -</button>
+                        <button onclick="increaseBrushSize()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold h-10 rounded-lg border border-slate-500 transition px-0">Brush +</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Project Modal -->
@@ -185,6 +237,10 @@
                     <a id="modalGithubBtn" href="#" target="_blank" rel="noopener noreferrer" class="hidden inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm font-medium text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
                         View Source
+                    </a>
+                    <a id="modalSteamBtn" href="#" target="_blank" rel="noopener noreferrer" class="hidden inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 border border-indigo-400 rounded-lg text-sm font-medium text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>
+                        View on Steam
                     </a>
                 </div>
             </div>

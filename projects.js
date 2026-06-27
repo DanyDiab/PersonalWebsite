@@ -1,19 +1,20 @@
-const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.\n 
-In this project, I set out to test the performance of the spatial partioning algorithms under different simulation densities.\n
-To demonstrate my findings, I created visualizers and graphs for the presentation. \n Created a 12 page report based on findings`
+const boidDesc = `2D Flocking Simulation optimized using uniform grids and quadtrees.
+In this project, I set out to test the performance of the spatial partitioning algorithms under different simulation densities.
+To demonstrate my findings, I created visualizers and graphs for the presentation.
+Created a 12-page report based on findings`
 
-const terrainDesc = `Procedural terrain genration tool creted in Unity and published on Steam.\n
-I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch.\n
+const terrainDesc = `Procedural terrain generation tool created in Unity and published on Steam.
+I implemented Perlin noise, Fractal Brownian Motion (fBm), and Multi Fractal Ridge Noise from scratch
 Optimized the expensive logic for the C# Burst Compiler to improve generation times.
-Implemeted texture blending in HLSL shaders.\n
-Created a user friendly menu, including a custom file system to import and share terrains.`
+Implemented texture blending in HLSL shaders.\n
+Created a user-friendly menu, including a custom file system to import and share terrains.`
 
-const wikiDesc = `A Wikipedia Search Engine imeplemented using Hyperlink Induced Topic Search (HITS) and TF-IDF.\n Managed large databases (~150GB) with one table containing 2.5B rows.\n
-Optimized query times using database indexing and caching. Reduced Topic Drift (a well known issue with HITS) using title boosting.`
+const wikiDesc = `A Wikipedia Search Engine implemented using Hyperlink Induced Topic Search (HITS) and TF-IDF. Managed large databases (~150GB) with one table containing 2.5B rows.
+Optimized query times using database indexing and caching. Reduced Topic Drift (a well-known issue with HITS) using title boosting.`
 
-const engineDesc = `A lightweight, high-performance 3D minigame engine built from scratch using C and OpenGL (FreeGLUT).\n
+const engineDesc = `A lightweight, high-performance 3D minigame engine built from scratch using C and OpenGL (FreeGLUT).
 Implemented a hierarchical scene graph and a flexible component-based "Behavior" system for modular game logic.
-Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.\n
+Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.
 Demonstrated with a submarine-themed underwater environment featuring fish and dynamic terrain.`
 
 
@@ -64,8 +65,9 @@ const projectDatabase = {
             "files/MountainExmaples/13.png"
         ],
         desc: terrainDesc,
-        tags: ["HLSL", "Unity", "Procedural Generation", "C#", "Burst Compilier"],
-        githubLink: "https://github.com/DanyDiab/MountainSim" 
+        tags: ["HLSL", "Unity", "Procedural Generation", "C#", "Burst Compiler"],
+        githubLink: "https://github.com/DanyDiab/MountainSim",
+        steamLink: "https://store.steampowered.com/app/4204400/Danys_Terrain_Sandbox/" 
     },
     'search': {
         title: "Wikipedia Search Engine",
@@ -105,13 +107,24 @@ let currentImages = [];
 let currentImageIndex = 0;
 let slideshowInterval = null;
 
+let elModalImage, elSlideshowCounter, elModalTitle, elModalDesc, elModalTags, elModalGithubBtn, elProjectModal, elModalInner;
+
+function gramFromHTML() {
+    elModalImage = document.getElementById('modalImage');
+    elSlideshowCounter = document.getElementById('slideshowCounter');
+    elModalTitle = document.getElementById('modalTitle');
+    elModalDesc = document.getElementById('modalDesc');
+    elModalTags = document.getElementById('modalTags');
+    elModalGithubBtn = document.getElementById('modalGithubBtn');
+    elProjectModal = document.getElementById('projectModal');
+    elModalInner = document.getElementById('modalInner');
+}
+
 function updateSlideshow() {
-    const imgEl = document.getElementById('modalImage');
-    const counterEl = document.getElementById('slideshowCounter');
-    if (imgEl && currentImages.length > 0) {
-        imgEl.src = currentImages[currentImageIndex];
-        if (counterEl) {
-            counterEl.innerText = `${currentImageIndex + 1} / ${currentImages.length}`;
+    if (UI.modalImage && currentImages.length > 0) {
+        UI.modalImage.src = currentImages[currentImageIndex];
+        if (UI.slideshowCounter) {
+            UI.slideshowCounter.innerText = `${currentImageIndex + 1} / ${currentImages.length}`;
         }
     }
 }
@@ -133,29 +146,34 @@ window.openModal = function(projectId) {
     const data = projectDatabase[projectId];
     if (!data) return;
 
-    const titleEl = document.getElementById('modalTitle');
-    const descEl = document.getElementById('modalDesc');
-    if (titleEl) titleEl.innerText = data.title;
-    if (descEl) descEl.innerText = data.desc;
+    if (UI.modalTitle) UI.modalTitle.innerText = data.title;
+    if (UI.modalDesc) UI.modalDesc.innerText = data.desc;
     
-    const tagsContainer = document.getElementById('modalTags');
-    if (tagsContainer) {
-        tagsContainer.innerHTML = ''; 
+    if (UI.modalTags) {
+        UI.modalTags.innerHTML = ''; 
         data.tags.forEach(tag => {
             const span = document.createElement('span');
             span.className = 'bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700 text-xs font-mono text-blue-300';
             span.innerText = tag;
-            tagsContainer.appendChild(span);
+            UI.modalTags.appendChild(span);
         });
     }
 
-    const githubBtn = document.getElementById('modalGithubBtn');
-    if (githubBtn) {
+    if (UI.modalGithubBtn) {
         if (data.githubLink && data.githubLink !== "") {
-            githubBtn.href = data.githubLink;
-            githubBtn.classList.remove('hidden');
+            UI.modalGithubBtn.href = data.githubLink;
+            UI.modalGithubBtn.classList.remove('hidden');
         } else {
-            githubBtn.classList.add('hidden');
+            UI.modalGithubBtn.classList.add('hidden');
+        }
+    }
+
+    if (UI.modalSteamBtn) {
+        if (data.steamLink && data.steamLink !== "") {
+            UI.modalSteamBtn.href = data.steamLink;
+            UI.modalSteamBtn.classList.remove('hidden');
+        } else {
+            UI.modalSteamBtn.classList.add('hidden');
         }
     }
 
@@ -164,42 +182,34 @@ window.openModal = function(projectId) {
     currentImageIndex = 0;
     updateSlideshow();
     
-    const modal = document.getElementById('projectModal');
-    const modalInner = document.getElementById('modalInner');
-    
-    if (modal && modalInner) {
-        modal.classList.remove('hidden');
+    if (UI.projectModal && UI.modalInner) {
+        UI.projectModal.classList.remove('hidden');
         requestAnimationFrame(() => {
-            modal.classList.remove('opacity-0');
-            modal.classList.remove('pointer-events-none');
-            modal.classList.add('pointer-events-auto');
-            modalInner.classList.remove('scale-95');
+            UI.projectModal.classList.remove('opacity-0');
+            UI.projectModal.classList.remove('pointer-events-none');
+            UI.projectModal.classList.add('pointer-events-auto');
+            UI.modalInner.classList.remove('scale-95');
         });
     }
 };
 
 window.closeModal = function() {
-    const modal = document.getElementById('projectModal');
-    const modalInner = document.getElementById('modalInner');
-    
-    if (!modal) return; 
+    if (!UI.projectModal) return; 
 
-    modal.classList.add('opacity-0');
-    modal.classList.add('pointer-events-none');
-    if (modalInner) modalInner.classList.add('scale-95');
+    UI.projectModal.classList.add('opacity-0');
+    UI.projectModal.classList.add('pointer-events-none');
+    if (UI.modalInner) UI.modalInner.classList.add('scale-95');
         
     setTimeout(() => {
-        modal.classList.add('hidden');
+        UI.projectModal.classList.add('hidden');
         currentImages = [];
         currentImageIndex = 0;
     }, 300);
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    const modal = document.getElementById('projectModal');
-    if (modal) {
-        modal.addEventListener('click', (e) => {
+document.addEventListener('DOMContentLoaded', () => {    
+    if (UI.projectModal) {
+        UI.projectModal.addEventListener('click', (e) => {
             if (e.target.id === 'projectModal') {
                 window.closeModal();
             }
