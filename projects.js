@@ -16,6 +16,15 @@ Implemented a hierarchical scene graph and a flexible component-based "Behavior"
 Features include a custom .obj parser, Phong-based materials, and a custom 3D vector math library.\n
 Demonstrated with a submarine-themed underwater environment featuring fish and dynamic terrain.`
 
+
+const LsystemDesc = `
+A high-performance procedural modeling engine built from scratch in C++ and OpenGL designed to interpret formal string-rewriting grammars for 3D and 2D organic structure generation.\n\nKey Features:\n
+    - Advanced Grammar Parser: Built a custom parser capable of evaluating both stochastic (probabilistic)and parametric production rules to generate intricate, varied branching structures.\n
+    - Modern OpenGL Pipeline: Implemented robust low-level graphics management using raw Vertex Array Objects (VAOs) and Vertex Buffer Objects (VBOs).\n
+    - GPU Instanced Cylinder Rendering: Optimized the rendering architecture to draw thousands of independent mesh geometries efficiently within a single draw call, maximizing GPU throughput.\n
+    - Organic Simulation Behaviors: Integrated complex spatial tracking including quaternion-based 
+turtle rotations, environmental tropism, and surface-alignment ($ command) support.;`
+
 const projectDatabase = {
     'engine': {
         title: "Custom 3D Minigame Engine",
@@ -71,7 +80,24 @@ const projectDatabase = {
         ],
         desc: wikiDesc,
         tags: ["Python", "SQLite", "Big Data"],
-        githubLink: "https://github.com/danydiab/Wikisearch"
+        githubLink: "https://github.com/danydiab/Wikisearch",
+
+    },
+    'Lsystem' :{
+        title: "L-System Parser and Renderer",
+        desc: LsystemDesc,
+        tags: ["C++", "GPU Instancing", "Quaternions", "OpenGL"],
+        images: ["files/Lsystem/1.png",
+                "files/Lsystem/2.png",
+                "files/Lsystem/3.png",
+                "files/Lsystem/4.png",
+                "files/Lsystem/5.png",
+                "files/Lsystem/6.png",
+                "files/Lsystem/7.png",
+                "files/Lsystem/8.png",
+                "files/Lsystem/9.png",
+        ],
+        githubLink: "https://github.com/DanyDiab/LSystem" 
     }
 };
 
